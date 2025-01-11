@@ -8,8 +8,8 @@ namespace MacroOfExile.Macro.Context
 {
     public interface IContext
     {
-        T GetVariable<T>(string name) where T : class;
-        void SetVariable<T>(string name, T variableValue) where T : class;
-        void ModifyVariable<T>(string name, Action<T> action) where T : class;
+        string GetVariable(string name);
+        void SetVariable(string name, string variableValue);
+        void ModifyVariable(string name, Action<string> action);
     }
 }

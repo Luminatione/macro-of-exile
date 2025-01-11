@@ -1,4 +1,7 @@
-﻿using MacroOfExile.Action.Actions;
+﻿using Castle.Core.Configuration;
+using MacroOfExile.Action;
+using MacroOfExile.Action.Actions;
+using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
 using Moq;
 using System;
@@ -31,13 +34,13 @@ namespace MacroOfExileTest.ActionTest
                 onFailure: "fail",
                 isLast: false)
             {
-                X = 100,
-                Y = 200,
+                X = new Evaluatebale("100"),
+                Y = new Evaluatebale("200"),
                 Button = SingleClickAction.MouseButton.LMB
             };
 
             // Act
-            singleClickAction.Execute(_mockTarget.Object);
+            singleClickAction.Execute(_mockTarget.Object, new MutableDictionaryContext());
 
             // Assert
             _mockTarget.Verify(t => t.MoveMouse(100, 200), Times.Once);
@@ -56,13 +59,13 @@ namespace MacroOfExileTest.ActionTest
                 onFailure: "fail",
                 isLast: true)
             {
-                X = 150,
-                Y = 150,
+                X = new Evaluatebale("150"),
+                Y = new Evaluatebale("150"),
                 Button = (SingleClickAction.MouseButton)999
             };
 
             // Act & Assert
-            Assert.DoesNotThrow(() => singleClickAction.Execute(_mockTarget.Object));
+            Assert.DoesNotThrow(() => singleClickAction.Execute(_mockTarget.Object, new MutableDictionaryContext()));
         }
     }
 }

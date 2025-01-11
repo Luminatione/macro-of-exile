@@ -1,4 +1,5 @@
 ﻿using MacroOfExile.Exceptions;
+using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace MacroOfExile.Macro
 {
-    public class MacroExecutor(ITarget target) : IMacroExecutor
+    public class MacroExecutor(ITarget target, IContext context) : IMacroExecutor
     {
-
         public void After()
         {
             
@@ -26,7 +26,7 @@ namespace MacroOfExile.Macro
             Action.Action action = macro.Actions.Where(a => a.Id == "0").FirstOrDefault() ?? throw new MissingFirstMacroElementException("Macro has to contain element with ID equal 0");
             while (true)
             {
-                action.Execute(target);
+                action.Execute(target, context);
                 if (action.IsLast)
                 {
                     break;

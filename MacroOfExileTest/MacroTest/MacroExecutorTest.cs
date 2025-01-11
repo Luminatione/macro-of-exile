@@ -1,5 +1,6 @@
 ﻿using MacroOfExile.Exceptions;
 using MacroOfExile.Macro;
+using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
 using Moq;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace MacroOfExileTest.MacroTest
         public void SetUp()
         {
             _mockTarget = new Mock<ITarget>();
-            _macroExecutor = new MacroExecutor(_mockTarget.Object);
+            _macroExecutor = new MacroExecutor(_mockTarget.Object, new MutableDictionaryContext());
         }
 
         [Test]
@@ -36,7 +37,7 @@ namespace MacroOfExileTest.MacroTest
             _macroExecutor.Execute(macro);
 
             // Assert
-            mockAction.Verify(a => a.Execute(_mockTarget.Object), Times.Once);
+            mockAction.Verify(a => a.Execute(_mockTarget.Object, It.IsAny<IContext>()), Times.Once);
             mockAction.Verify(a => a.GetNext(It.IsAny<ITarget>()), Times.Never);
         }
 
@@ -60,9 +61,9 @@ namespace MacroOfExileTest.MacroTest
             _macroExecutor.Execute(macro);
 
             // Assert
-            mockAction1.Verify(a => a.Execute(_mockTarget.Object), Times.Once);
+            mockAction1.Verify(a => a.Execute(_mockTarget.Object, It.IsAny<IContext>()), Times.Once);
             mockAction1.Verify(a => a.GetNext(It.IsAny<ITarget>()), Times.Once);
-            mockAction2.Verify(a => a.Execute(_mockTarget.Object), Times.Once);
+            mockAction2.Verify(a => a.Execute(_mockTarget.Object, It.IsAny<IContext>()), Times.Once);
             mockAction2.Verify(a => a.GetNext(It.IsAny<ITarget>()), Times.Never);
         }
 

@@ -22,10 +22,10 @@ namespace MacroOfExileTest.MacroTest
         public void CreateMacro_ReturnsValidMacro_WhenFileIsValidJson()
         {
             // Arrange
-            var mockFileContent = "{ \"Actions\": [{ \"$type\": \"SingleClick\", \"Id\": \"0\", \"OnSuccess\": \"2\", \"OnFailure\": \"3\", \"X\": 100, \"Y\": 200, \"Button\": 0} ] }";
+            var mockFileContent = "{ \"Actions\": [{ \"$type\": \"SingleClick\", \"Id\": \"0\", \"OnSuccess\": \"2\", \"OnFailure\": \"3\", \"X\":{ \"Expression\":\"100\"}, \"Y\": { \"Expression\":\"200\"}, \"Button\": 0} ] }";
             var configuration = new MacroConfiguration();
             var mockResolver = new Mock<IActionResultResolver>();
-            var actions = new List<MacroOfExile.Action.Action>(){ new SingleClickAction("0", mockResolver.Object, "2", "3") {Button = 0, X = 100, Y = 200 } };
+            var actions = new List<MacroOfExile.Action.Action>(){ new SingleClickAction("0", mockResolver.Object, "2", "3") {Button = 0, X = new Evaluatebale("100"), Y = new Evaluatebale("200") } };
             var mockMacro = new Macro(actions, configuration);
 
             var configurationProviderMock = new Mock<IConfigurationProvider>();

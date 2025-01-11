@@ -7,40 +7,34 @@ using System.Threading.Tasks;
 
 namespace MacroOfExile.Macro.Context
 {
-    internal class MutableDictionaryContext : IContext
+    public class MutableDictionaryContext : IContext
     {
-        protected class Variable
-        {
-            public required Type type;
-            public required object value;
-        }
+        private readonly Dictionary<string, string> values = [];
 
-        private readonly Dictionary<string, Variable> values = [];
-
-        public T GetVariable<T>(string name) where T : class
+        public string GetVariable(string name)
         {
             if (values.TryGetValue(name, out var value))
             {
-                return value.value as T ?? throw new InvalidCastException($"{name} cannot be get as {typeof(T).Name} since it's {value.type.Name}");
+                return value;
             }
 
             throw new UnknownVariableException($"Variable {name} is not known");
         }
 
-        public void ModifyVariable<T>(string name, Action<T> action) where T : class
+        public void ModifyVariable(string name, Action<string> action)
         {
             if (values.TryGetValue(name, out var value))
             {
-                action((T) value.value);
+                action(value);
                 return;
             }
 
             throw new UnknownVariableException($"Variable {name} is not known");
         }
 
-        public void SetVariable<T>(string name, T variableValue) where T : class
+        public void SetVariable(string name, string variableValue)
         {
-            values[name].value = variableValue;
+            values[name] = variableValue;
         }
     }
 }

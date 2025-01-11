@@ -1,5 +1,6 @@
 ﻿using MacroOfExile.Configuration;
 using MacroOfExile.Macro;
+using MacroOfExile.Macro.Context;
 using MacroOfExile.Macro.MacroLoader;
 using MacroOfExile.Target;
 
@@ -13,7 +14,7 @@ namespace MacroOfExile
             IMacroLoader macroLoader = new JsonMacroLoader("macro.json", configurationProvider);
             var macro = macroLoader.CreateMacro();
             ITarget target = new ConsoleTarget();
-            IMacroExecutor macroExecutor = new MacroExecutor(target);
+            IMacroExecutor macroExecutor = new MacroExecutor(target, new MutableDictionaryContext());
             macroExecutor.Execute(macro);
         }
     }

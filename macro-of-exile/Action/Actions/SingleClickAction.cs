@@ -1,4 +1,6 @@
 ﻿using MacroOfExile.Action.ActionResultResolver;
+using MacroOfExile.Exceptions;
+using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
 using System;
 using System.Collections.Generic;
@@ -17,13 +19,23 @@ namespace MacroOfExile.Action.Actions
             MMB = 3
         };
 
-        public int X { get; set; }
-        public int Y { get; set; }
-        public MouseButton Button { get; set; }
+        public required Evaluatebale X { get; set; }
+        public required Evaluatebale Y { get; set; }
+        public required MouseButton Button { get; set; }
 
-        public override void Execute(ITarget target)
+        public override void Execute(ITarget target, IContext context)
         {
-            target.MoveMouse(X, Y);
+            if (!int.TryParse(X.GetValue(context), out int xValue))
+            {
+                throw new UncastableVariableException($"Failed to cast variable to target type in expression {X.Expression}");
+            }
+
+            if (!int.TryParse(Y.GetValue(context), out int yValue))
+            {
+                throw new UncastableVariableException($"Failed to cast variable to target type in expression {Y.Expression}");
+            }
+
+            target.MoveMouse(xValue, yValue);
             target.SetKeyState((int) Button, 1);
             target.SetKeyState((int) Button, 0);
         }

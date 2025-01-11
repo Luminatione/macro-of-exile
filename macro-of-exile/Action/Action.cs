@@ -1,17 +1,16 @@
 ﻿using MacroOfExile.Action.ActionResultResolver;
 using MacroOfExile.Action.Actions;
+using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
 using System.Text.Json.Serialization;
 
 namespace MacroOfExile.Action
 {
     [JsonDerivedType(typeof(SingleClickAction), typeDiscriminator: "SingleClick")]
+    [JsonDerivedType(typeof(InitializeContextAction), typeDiscriminator: "InitializeContext")]
     public abstract class Action(string id, IActionResultResolver? resolver, string onSuccess, string onFailure, bool isLast = false)
     {
-        protected Action() : this("0", null, "0", "0")
-        {
-            
-        }
+        protected Action() : this("0", null, "0", "0") { }
 
         public virtual string Id { get; } = id;
         public virtual bool IsLast { get; } = isLast;
@@ -19,7 +18,7 @@ namespace MacroOfExile.Action
         public virtual string OnSuccess { get; } = onSuccess;
         public virtual string OnFailure { get; } = onFailure;
 
-        public abstract void Execute(ITarget target);
+        public abstract void Execute(ITarget target, IContext context);
 
         public virtual string GetNext(ITarget target)
         {

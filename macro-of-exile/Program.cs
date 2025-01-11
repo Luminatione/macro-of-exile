@@ -11,7 +11,7 @@ namespace MacroOfExile
         {
             IConfigurationProvider configurationProvider = new JsonConfigurationProvider();
             IMacroLoader macroLoader = new JsonMacroLoader("macro.json", configurationProvider);
-            Macro.Macro macro = macroLoader.CreateMacro();
+            var macro = macroLoader.CreateMacro();
             ITarget target = new ConsoleTarget();
             IMacroExecutor macroExecutor = new MacroExecutor(target);
             macroExecutor.Execute(macro);

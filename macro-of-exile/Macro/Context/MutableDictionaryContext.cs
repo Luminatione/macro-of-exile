@@ -15,7 +15,7 @@ namespace MacroOfExile.Macro.Context
             public required object value;
         }
 
-        private Dictionary<string, Variable> values = new Dictionary<string, Variable>();
+        private readonly Dictionary<string, Variable> values = [];
 
         public T GetVariable<T>(string name) where T : class
         {

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacroOfExile", "MacroOfExile.csproj", "{5E0A6719-6EA3-4914-990A-F343BBEB5426}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacroOfExileTest", "..\MacroOfExileTest\MacroOfExileTest.csproj", "{BE681A4B-A6BC-4C26-9338-AD18A06F997A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5E0A6719-6EA3-4914-990A-F343BBEB5426}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E0A6719-6EA3-4914-990A-F343BBEB5426}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E0A6719-6EA3-4914-990A-F343BBEB5426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE681A4B-A6BC-4C26-9338-AD18A06F997A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE681A4B-A6BC-4C26-9338-AD18A06F997A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE681A4B-A6BC-4C26-9338-AD18A06F997A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE681A4B-A6BC-4C26-9338-AD18A06F997A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

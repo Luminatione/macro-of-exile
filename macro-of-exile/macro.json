@@ -1,0 +1,35 @@
+{
+        "Actions": [
+            {
+                "$type": "SingleClick",
+                "Id": "1",
+                "OnSuccess": "2",
+                "OnFailure": "3",
+                "Resolver": 
+                {
+                    "$type": "ConsolePrompt"
+                },
+                "X": 100,
+                "Y": 200,
+                "Button": 0
+            },
+            {
+                "$type": "SingleClick",
+                "Id": "2",
+                "IsLast": true,
+                "X": 500,
+                "Y": 2000,
+                "Button": 1
+            },
+            {
+                "$type": "SingleClick",
+                "Id": "3",
+                "OnSuccess": "1",
+                "OnFailure": "3",
+                "X": 999,
+                "Y": 0,
+                "Button": 3
+            }
+        ]
+    
+}

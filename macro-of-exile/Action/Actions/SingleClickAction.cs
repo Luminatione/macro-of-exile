@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MacroOfExile.Action.Actions
 {
-    public class SingleClickAction(string id, IActionResultResolver resolver, string onSuccess, string onFailure, bool isLast = false) : Action(id, resolver, onSuccess, onFailure, isLast)
+    public class SingleClickAction(string id, IActionResultResolver? resolver, string onSuccess, string onFailure, bool isLast = false) : Action(id, resolver, onSuccess, onFailure, isLast)
     {
         public enum MouseButton
         {

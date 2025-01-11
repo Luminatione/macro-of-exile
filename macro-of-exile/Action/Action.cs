@@ -6,19 +6,24 @@ using System.Text.Json.Serialization;
 namespace MacroOfExile.Action
 {
     [JsonDerivedType(typeof(SingleClickAction), typeDiscriminator: "SingleClick")]
-    public abstract class Action(string id, IActionResultResolver resolver, string onSuccess, string onFailure, bool isLast = false)
+    public abstract class Action(string id, IActionResultResolver? resolver, string onSuccess, string onFailure, bool isLast = false)
     {
-        public string Id { get; } = id;
-        public bool IsLast { get; } = isLast;
-        public IActionResultResolver Resolver { get; } = resolver;
-        public string OnSuccess { get; } = onSuccess;
-        public string OnFailure { get; } = onFailure;
+        protected Action() : this("0", null, "0", "0")
+        {
+            
+        }
+
+        public virtual string Id { get; } = id;
+        public virtual bool IsLast { get; } = isLast;
+        public virtual IActionResultResolver? Resolver { get; } = resolver;
+        public virtual string OnSuccess { get; } = onSuccess;
+        public virtual string OnFailure { get; } = onFailure;
 
         public abstract void Execute(ITarget target);
 
-        public string GetNext(ITarget target)
+        public virtual string GetNext(ITarget target)
         {
-            return Resolver.IsSuccess(target) ? OnSuccess : OnFailure;
+            return (Resolver?.IsSuccess(target) ?? true) ? OnSuccess : OnFailure;
         }
     }
 }

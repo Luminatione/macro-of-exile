@@ -8,5 +8,7 @@ namespace MacroOfExile.Configuration
 {
     public class MacroConfiguration
     {
+        public int MinShortDelay { get; set; }
+        public int MaxShortDelay { get; set; }
     }
 }

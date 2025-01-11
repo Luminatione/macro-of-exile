@@ -9,7 +9,7 @@ namespace MacroOfExile.Macro
     public interface IMacroExecutor
     {
         void Before();
-        void Execute();
+        void Execute(Macro macro);
         void After();
     }
 }

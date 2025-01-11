@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MacroOfExile.Macro
+namespace MacroOfExile.Macro.MacroLoader
 {
     public interface IMacroLoader
     {
-        Macro LoadMacro();
+        Macro CreateMacro();
     }
 }

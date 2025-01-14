@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MacroOfExileTest.Configuration
+namespace MacroOfExileTest.ConfigurationTest
 {
     [TestFixture]
     internal class JsonConfigurationProviderTest

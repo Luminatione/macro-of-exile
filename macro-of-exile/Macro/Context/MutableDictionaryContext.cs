@@ -21,11 +21,11 @@ namespace MacroOfExile.Macro.Context
             throw new UnknownVariableException($"Variable {name} is not known");
         }
 
-        public void ModifyVariable(string name, Action<string> action)
+        public void ModifyVariable(string name, Func<string, string> action)
         {
             if (values.TryGetValue(name, out var value))
             {
-                action(value);
+                values[name] = action(value);
                 return;
             }
 

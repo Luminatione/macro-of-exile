@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MacroOfExile.Action.Actions
 {
-    public class InitializeContextAction(string id, string onSuccess) : Action(id, null, onSuccess, string.Empty)
+    public class InitializeContextAction(string id, string next) : Action(id, null, next, string.Empty)
     {
         public Dictionary<string, string> Variables { get; set; } = [];
 

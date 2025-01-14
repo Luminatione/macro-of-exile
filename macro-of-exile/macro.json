@@ -1,35 +1,41 @@
 {
-        "Actions": [
-            {
-                "$type": "SingleClick",
-                "Id": "1",
-                "OnSuccess": "2",
-                "OnFailure": "3",
-                "Resolver": 
-                {
-                    "$type": "ConsolePrompt"
-                },
-                "X": 100,
-                "Y": 200,
-                "Button": 0
-            },
-            {
-                "$type": "SingleClick",
-                "Id": "2",
-                "IsLast": true,
-                "X": 500,
-                "Y": 2000,
-                "Button": 1
-            },
-            {
-                "$type": "SingleClick",
-                "Id": "3",
-                "OnSuccess": "1",
-                "OnFailure": "3",
-                "X": 999,
-                "Y": 0,
-                "Button": 3
-            }
-        ]
-    
+  "Actions": [
+    {
+      "$type": "InitializeContext",
+      "Id": "0",
+      "OnSuccess": "3",
+      "Variables": {
+        "var1": "100",
+        "var2": "200"
+      }
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "2",
+      "IsLast": true,
+      "X": {
+        "Expression": "$var1"
+      },
+      "Y": {
+        "Expression": "$var2"
+      },
+      "Button": 1
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "3",
+      "OnSuccess": "2",
+      "OnFailure": "3",
+      "X": {
+        "Expression": "999"
+      },
+      "Y": {
+        "Expression": "0"
+      },
+      "Button": 3,
+      "Resolver": {
+        "$type": "ConsolePrompt"
+      }
+    }
+  ]
 }

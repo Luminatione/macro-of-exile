@@ -10,6 +10,6 @@ namespace MacroOfExile.Macro.Context
     {
         string GetVariable(string name);
         void SetVariable(string name, string variableValue);
-        void ModifyVariable(string name, Action<string> action);
+        void ModifyVariable(string name, Func<string, string> action);
     }
 }

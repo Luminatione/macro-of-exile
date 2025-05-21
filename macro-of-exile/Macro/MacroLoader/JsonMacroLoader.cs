@@ -17,7 +17,7 @@ namespace MacroOfExile.Macro.MacroLoader
 
         private string Filepath { get; } = filepath;
 
-        public Macro CreateMacro()
+        public Macro LoadMacro()
         {
             Macro macro = JsonDocument.Parse(fileSystem.File.ReadAllText(Filepath)).Deserialize<Macro>() ?? throw new JsonException($"Failed to parse file {Filepath}");
             macro.MacroConfiguration = configurationProvider.GetConfiguration();

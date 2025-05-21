@@ -1,22 +1,22 @@
-﻿using MacroOfExile.Action.ActionResultResolver;
-using MacroOfExile.Action.Actions.Enums;
-using MacroOfExile.Exceptions;
-using MacroOfExile.Macro.Context;
-using MacroOfExile.Target;
-using Shared.Target;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MacroOfExile.Action.ActionResultResolver;
+using MacroOfExile.Action.Actions.Enums;
+using MacroOfExile.Exceptions;
+using MacroOfExile.Macro.Context;
+using Shared.Target;
 
 namespace MacroOfExile.Action.Actions
 {
-    public class SingleClickAction(string id, IActionResultResolver? resolver, string onSuccess, string onFailure, bool isLast = false) : Action(id, resolver, onSuccess, onFailure, isLast)
+    public class SetButtonStateAction(string id, IActionResultResolver? resolver, string onSuccess, string onFailure, bool isLast = false) : Action(id, resolver, onSuccess, onFailure, isLast)
     {
         public required Evaluatebale X { get; set; }
         public required Evaluatebale Y { get; set; }
         public required MouseButton Button { get; set; }
+        public required int State { get; set; }
 
         public override void Execute(ITarget target, IContext context)
         {
@@ -31,10 +31,7 @@ namespace MacroOfExile.Action.Actions
             }
 
             target.MoveMouse(xValue, yValue);
-			Thread.Sleep(target.GetMilisBetweenActions());
-			target.SetButtonState((int) Button, 1);
-            Thread.Sleep(target.GetMilisBetweenActions());
-			target.SetButtonState((int)Button, 0);
-		}
+            target.SetButtonState((int) Button, State);
+        }
     }
 }

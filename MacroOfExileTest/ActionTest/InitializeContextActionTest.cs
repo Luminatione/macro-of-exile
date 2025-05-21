@@ -2,6 +2,7 @@
 using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
 using Moq;
+using Shared.Target;
 using System;
 using System.Collections.Generic;
 using System.Linq;

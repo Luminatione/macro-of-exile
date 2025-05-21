@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace MacroOfExile.Macro
 {
-    public class Macro(List<Action.Action> actions, MacroConfiguration macroConfiguration)
+    public class Macro(List<Action.Action> actions)
     {
         public List<Action.Action> Actions { get; set; } = actions ?? throw new ArgumentNullException(nameof(actions));
-        public MacroConfiguration MacroConfiguration { get; set; } = macroConfiguration ?? new MacroConfiguration();
+        public MacroConfiguration MacroConfiguration { get; set; } = new MacroConfiguration();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
+using Shared.Target;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MacroOfExile.Action.Actions
 {
-    public class InitializeContextAction(string id, string next) : Action(id, null, next, string.Empty)
+    public class InitializeContextAction(string id, string onSuccess) : Action(id, null, onSuccess, string.Empty)
     {
         public Dictionary<string, string> Variables { get; set; } = [];
 

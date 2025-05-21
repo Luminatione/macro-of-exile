@@ -1,9 +1,11 @@
 ﻿using Castle.Core.Configuration;
 using MacroOfExile.Action;
 using MacroOfExile.Action.Actions;
+using MacroOfExile.Action.Actions.Enums;
 using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
 using Moq;
+using Shared.Target;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,17 +38,19 @@ namespace MacroOfExileTest.ActionTest
             {
                 X = new Evaluatebale("100"),
                 Y = new Evaluatebale("200"),
-                Button = SingleClickAction.MouseButton.LMB
+                Button = MouseButton.LMB
             };
+            _mockTarget.Setup(m => m.GetMilisBetweenActions()).Returns(0);
 
             // Act
             singleClickAction.Execute(_mockTarget.Object, new MutableDictionaryContext());
 
             // Assert
             _mockTarget.Verify(t => t.MoveMouse(100, 200), Times.Once);
-            _mockTarget.Verify(t => t.SetKeyState((int)SingleClickAction.MouseButton.LMB, 1), Times.Once);
-            _mockTarget.Verify(t => t.SetKeyState((int)SingleClickAction.MouseButton.LMB, 0), Times.Once);
-        }
+            _mockTarget.Verify(t => t.SetButtonState((int) MouseButton.LMB, 1), Times.Once);
+            _mockTarget.Verify(t => t.SetButtonState((int) MouseButton.LMB, 0), Times.Once);
+			_mockTarget.Verify(t => t.GetMilisBetweenActions(), Times.Exactly(2));
+		}
 
         [Test]
         public void Execute_WhenUnknownButton_DoesntThrow()
@@ -61,7 +65,7 @@ namespace MacroOfExileTest.ActionTest
             {
                 X = new Evaluatebale("150"),
                 Y = new Evaluatebale("150"),
-                Button = (SingleClickAction.MouseButton)999
+                Button = (MouseButton) 999
             };
 
             // Act & Assert

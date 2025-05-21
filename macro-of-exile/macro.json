@@ -1,41 +1,68 @@
 {
   "Actions": [
     {
-      "$type": "InitializeContext",
+      "$type": "SetKeyState",
       "Id": "0",
-      "OnSuccess": "3",
-      "Variables": {
-        "var1": "100",
-        "var2": "200"
-      }
+      "Key": 11,
+      "State": 1,
+      "OnSuccess": "2"
     },
+
     {
-      "$type": "SingleClick",
+      "$type": "SetKeyState",
       "Id": "2",
-      "IsLast": true,
-      "X": {
-        "Expression": "$var1"
-      },
-      "Y": {
-        "Expression": "$var2"
-      },
-      "Button": 1
+      "Key": 8,
+      "State": 1,
+      "OnSuccess": "4"
+    },
+
+    {
+      "$type": "SetKeyState",
+      "Id": "4",
+      "Key": 15,
+      "State": 1,
+      "OnSuccess": "6"
+    },
+
+    {
+      "$type": "SetKeyState",
+      "Id": "6",
+      "Key": 15,
+      "State": 1,
+      "OnSuccess": "8"
+    },
+
+    {
+      "$type": "SetKeyState",
+      "Id": "8",
+      "Key": 18,
+      "State": 1,
+      "OnSuccess": "9"
     },
     {
-      "$type": "SingleClick",
-      "Id": "3",
-      "OnSuccess": "2",
-      "OnFailure": "3",
-      "X": {
-        "Expression": "999"
-      },
-      "Y": {
-        "Expression": "0"
-      },
-      "Button": 3,
-      "Resolver": {
-        "$type": "ConsolePrompt"
-      }
+      "$type": "SetKeyState",
+      "Id": "9",
+      "Key": 0,
+      "State": 0,
+      "OnSuccess": "10"
+    },
+    {
+      "$type": "SetButtonState",
+      "Id": "10",
+      "X": { "Expression": "100" },
+      "Y": { "Expression": "100" },
+      "Button": 0,
+      "State": 1,
+      "OnSuccess": "11"
+    },
+    {
+      "$type": "SetButtonState",
+      "Id": "11",
+      "X": { "Expression": "100" },
+      "Y": { "Expression": "100" },
+      "Button": 0,
+      "State": 0,
+      "IsLast": true
     }
   ]
 }

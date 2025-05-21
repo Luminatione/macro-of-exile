@@ -8,6 +8,6 @@ namespace MacroOfExile.Macro.MacroLoader
 {
     public interface IMacroLoader
     {
-        Macro CreateMacro();
+        Macro LoadMacro();
     }
 }

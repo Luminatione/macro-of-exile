@@ -3,6 +3,7 @@ using MacroOfExile.Macro;
 using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
 using Moq;
+using Shared.Target;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,7 @@ namespace MacroOfExileTest.MacroTest
             mockAction.Setup(a => a.Id).Returns("0");
             mockAction.Setup(a => a.IsLast).Returns(true);
 
-            var macro = new Macro([mockAction.Object], new MacroOfExile.Configuration.MacroConfiguration());
+            var macro = new Macro([mockAction.Object]);
 
             // Act
             _macroExecutor.Execute(macro);
@@ -55,7 +56,7 @@ namespace MacroOfExileTest.MacroTest
             mockAction2.Setup(a => a.Id).Returns("1");
             mockAction2.Setup(a => a.IsLast).Returns(true);
 
-            var macro = new Macro([mockAction1.Object, mockAction2.Object], new MacroOfExile.Configuration.MacroConfiguration());
+            var macro = new Macro([mockAction1.Object, mockAction2.Object]);
 
             // Act
             _macroExecutor.Execute(macro);
@@ -76,7 +77,7 @@ namespace MacroOfExileTest.MacroTest
             mockAction.Setup(a => a.IsLast).Returns(false);
             mockAction.Setup(a => a.GetNext(It.IsAny<ITarget>())).Returns("1");
 
-            var macro = new Macro([mockAction.Object], new MacroOfExile.Configuration.MacroConfiguration());
+            var macro = new Macro([mockAction.Object]);
 
             // Act & Assert
             Assert.Throws<InvalidOperationException>(() => _macroExecutor.Execute(macro));
@@ -86,7 +87,7 @@ namespace MacroOfExileTest.MacroTest
         public void Execute_ShouldNotExecute_WhenMacroHasNoActions()
         {
             // Arrange
-            var macro = new Macro([], new MacroOfExile.Configuration.MacroConfiguration());
+            var macro = new Macro([]);
 
             // Act & Assert
             Assert.Throws<MissingFirstMacroElementException>(() => _macroExecutor.Execute(macro));

@@ -1,6 +1,7 @@
 ﻿using MacroOfExile.Exceptions;
 using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
+using Shared.Target;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +32,10 @@ namespace MacroOfExile.Macro
                 {
                     break;
                 }
+
                 string nextId = action.GetNext(target);
                 action = macro.Actions.Where(a => a.Id == nextId).First();
+                Thread.Sleep(target.GetMilisBetweenActions());
             } 
         }
     }

@@ -26,7 +26,7 @@ namespace MacroOfExileTest.MacroTest
             var configuration = new MacroConfiguration();
             var mockResolver = new Mock<IActionResultResolver>();
             var actions = new List<MacroOfExile.Action.Action>(){ new SingleClickAction("0", mockResolver.Object, "2", "3") {Button = 0, X = new Evaluatebale("100"), Y = new Evaluatebale("200") } };
-            var mockMacro = new Macro(actions, configuration);
+            var mockMacro = new Macro(actions);
 
             var configurationProviderMock = new Mock<IConfigurationProvider>();
             configurationProviderMock.Setup(cp => cp.GetConfiguration()).Returns(configuration);
@@ -37,7 +37,7 @@ namespace MacroOfExileTest.MacroTest
             var loader = new JsonMacroLoader("mock_macro.json", configurationProviderMock.Object, fileSystemMock.Object);
 
             // Act
-            var result = loader.CreateMacro();
+            var result = loader.LoadMacro();
 
             // Assert
             Assert.That(result, Is.Not.Null);
@@ -62,7 +62,7 @@ namespace MacroOfExileTest.MacroTest
             var loader = new JsonMacroLoader("mock_macro.json", configurationProviderMock.Object, fileSystemMock.Object);
 
             // Act & Assert
-            Assert.Throws(Is.InstanceOf<JsonException>(), () => loader.CreateMacro());
+            Assert.Throws(Is.InstanceOf<JsonException>(), () => loader.LoadMacro());
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace MacroOfExileTest.MacroTest
             var loader = new JsonMacroLoader("non_existent_macro.json", configurationProviderMock.Object, fileSystemMock.Object);
 
             // Act & Assert
-            Assert.Throws<FileNotFoundException>(() => loader.CreateMacro());
+            Assert.Throws<FileNotFoundException>(() => loader.LoadMacro());
         }
     }
 

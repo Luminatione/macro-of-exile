@@ -2,13 +2,16 @@
 using MacroOfExile.Action.Actions;
 using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
+using Shared.Target;
 using System.Text.Json.Serialization;
 
 namespace MacroOfExile.Action
 {
     [JsonDerivedType(typeof(SingleClickAction), typeDiscriminator: "SingleClick")]
     [JsonDerivedType(typeof(InitializeContextAction), typeDiscriminator: "InitializeContext")]
-    public abstract class Action(string id, IActionResultResolver? resolver, string onSuccess, string onFailure, bool isLast = false)
+    [JsonDerivedType(typeof(SetButtonStateAction), typeDiscriminator: "SetButtonState")]
+    [JsonDerivedType(typeof(SetKeyStateAction), typeDiscriminator: "SetKeyState")]
+    public abstract partial class Action(string id, IActionResultResolver? resolver, string onSuccess, string onFailure, bool isLast = false)
     {
         protected Action() : this("0", null, "0", "0") { }
 

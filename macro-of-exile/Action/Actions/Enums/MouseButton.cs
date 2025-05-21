@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MacroOfExile.Target
+namespace MacroOfExile.Action.Actions.Enums
 {
-    public interface ITargetProvider
-    {
-        ITarget GetTarget();
-    }
+	public enum MouseButton
+	{
+		LMB = 0,
+		RMB = 1,
+		MMB = 2
+	};
 }

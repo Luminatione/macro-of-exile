@@ -9,16 +9,6 @@ namespace VirtualDeviceInteractor
 		protected static readonly uint MouseInputEventControlCode = CTL_CODE(FILE_DEVICE_UNKNOWN, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS);
 		protected static readonly uint KeyboardInputEventControlCode = CTL_CODE(FILE_DEVICE_UNKNOWN, 0x801, METHOD_BUFFERED, FILE_ANY_ACCESS);
 
-		[StructLayout(LayoutKind.Sequential)]
-		public struct INPUT_MESSAGE
-		{
-			public char xAxis;
-			public char yAxis;
-			public int buttons;
-			public int key;
-			public int keyState;
-		}
-
 		protected const uint FILE_DEVICE_UNKNOWN = 0x00000022;
 		protected const uint METHOD_BUFFERED = 0;
 		protected const uint FILE_ANY_ACCESS = 0;
@@ -29,11 +19,9 @@ namespace VirtualDeviceInteractor
 		private const uint OPEN_EXISTING = 3;
 		private const uint FILE_ATTRIBUTE_NORMAL = 0x80;
 
-		private INPUT_MESSAGE inputState = new INPUT_MESSAGE();
-
 		protected IntPtr device;
 
-		public VirtualDeviceInteractor(string driverPath)
+        public VirtualDeviceInteractor(string driverPath)
 		{
 			device = CreateFile(driverPath, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, IntPtr.Zero, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, IntPtr.Zero);
 		}
@@ -65,30 +53,23 @@ namespace VirtualDeviceInteractor
 
 		public void MoveMouse(int x, int y)
 		{
-			inputState.xAxis = (char)x;
-			inputState.yAxis = (char)y;
-			SendInputState(inputState, MouseInputEventControlCode);
+			InputMessageBuilder builder = new InputMessageBuilder();
+			builder.Move((char)x, (char)y);
+			SendInputState(builder.Build(), MouseInputEventControlCode);
 		}
 
 		public void SetKeyState(int key, int state)
 		{
-			inputState.key = key;
-			inputState.keyState = state;
-			SendInputState(inputState, KeyboardInputEventControlCode);
+            InputMessageBuilder builder = new InputMessageBuilder();
+			builder.Key(key, state);
+			SendInputState(builder.Build(), KeyboardInputEventControlCode);
 		}
 
 		public void SetButtonState(int button, int state)
 		{
-			if (state == 0)
-			{
-				inputState.buttons &= ~(1 << button);
-			}
-			else
-			{
-				inputState.buttons |= (1 << button);
-			}
-
-			SendInputState(inputState, MouseInputEventControlCode);
+            InputMessageBuilder builder = new InputMessageBuilder();
+			builder.Button(button, state);
+            SendInputState(builder.Build(), MouseInputEventControlCode);
 		}
 
 		public int GetMilisBetweenActions()
@@ -96,9 +77,9 @@ namespace VirtualDeviceInteractor
 			return 20;
 		}
 
-		protected void SendInputState(INPUT_MESSAGE inputState, uint canal)
+		protected void SendInputState(InputMessage inputState, uint canal)
 		{
-			int size = Marshal.SizeOf<INPUT_MESSAGE>();
+			int size = Marshal.SizeOf<InputMessage>();
 			IntPtr buffer = Marshal.AllocHGlobal(size);
 			try
 			{

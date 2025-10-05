@@ -73,12 +73,7 @@ KeyboardHidReport* GetKeyboardReport(PINPUT_MESSAGE message)
 
 	RtlZeroMemory(report, sizeof(*report));
 	report->reportId = KEYBOARD_REPORT_ID;
-	report->key1 = (UCHAR) message->key;
-	report->key2 = 0;
-	report->key3 = 0;
-	report->key4 = 0;
-	report->key5 = 0;
-	report->key6 = 0;
+	report->key[0] = (UCHAR)message->key;
 
 	return report;
 }
@@ -128,7 +123,7 @@ NTSTATUS VirtualDeviceDriverQueueInitialize(_In_ WDFDEVICE Device)
 
 	}
 
-	if (queueContext == NULL)
+	if (deviceContext == NULL)
 	{
 		TraceEvents(TRACE_LEVEL_ERROR, TRACE_QUEUE, "Failed to get device context");
 		return STATUS_INSUFFICIENT_RESOURCES;
@@ -204,7 +199,12 @@ VOID VirtualDeviceDriverEvtIoDeviceControl(_In_ WDFQUEUE Queue, _In_ WDFREQUEST 
 		TraceEvents(TRACE_LEVEL_ERROR, TRACE_QUEUE, "WdfRequestRetrieveInputBuffer failed: 0x%x", status);
 	}
 
-	HandleMessage(QueueGetContext(Queue), message, IoControlCode);
+	status = HandleMessage(QueueGetContext(Queue), message, IoControlCode);
+	if (!NT_SUCCESS(status))
+	{
+		TraceEvents(TRACE_LEVEL_ERROR, TRACE_QUEUE, "HandleMessage failed: 0x%x", status);
+	}
+
 	WdfRequestComplete(Request, status);
 }
 

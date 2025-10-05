@@ -39,20 +39,29 @@ static UCHAR InputReportDescriptor[] =
 		0x09, 0x06,    // UsageId(Keyboard[0x0006])
 		0xA1, 0x01,    // Collection(Application)
 		0x85, KEYBOARD_REPORT_ID,    //     ReportId(2)
-		0x05, 0x07,    //     UsagePage(Keyboard/Keypad[0x0007])
-		0x19, 0xE0,    //     UsageIdMin(Keyboard LeftControl[0x00E0])
-		0x29, 0xE7,    //     UsageIdMax(Keyboard Right GUI[0x00E7])
-		0x95, 0x08,    //     ReportCount(8)
-		0x75, 0x01,    //     ReportSize(1)
-		0x81, 0x02,    //     Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
-		0x19, 0x00,    //     UsageIdMin(0x0000)
-		0x29, 0x65,    //     UsageIdMax(Keyboard Application[0x0065])
-		0x15, 0x00,    //     LogicalMinimum(0)
-		0x25, 0x65,    //     LogicalMaximum(101)
-		0x75, 0x08,    //     ReportSize(8)
-		0x95, 0x06,    //     Report Count (6)
-		0x81, 0x00,    //     Input(Data, Array, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
-		0xC0,          // EndCollection()
+		0x05, 0x07,        //   Usage Page (Keyboard)
+		0x19, 0xE0,        //   Usage Minimum (Left Control)
+		0x29, 0xE7,        //   Usage Maximum (Right GUI)
+		0x15, 0x00,        //   Logical Minimum (0)
+		0x25, 0x01,        //   Logical Maximum (1)
+		0x75, 0x01,        //   Report Size (1)
+		0x95, 0x08,        //   Report Count (8)
+		0x81, 0x02,        //   Input (Data, Variable, Absolute) ; Modifier byte
+		// Reserved byte
+		0x75, 0x08,        //   Report Size (8)
+		0x95, 0x01,        //   Report Count (1)
+		0x81, 0x01,        //   Input (Constant) ; Reserved
+		// Key array (6 bytes)
+		0x05, 0x07,        //   Usage Page (Keyboard)
+		0x19, 0x00,        //   Usage Minimum (0)
+		0x29, 0x65,        //   Usage Maximum (101)
+		0x15, 0x00,        //   Logical Minimum (0)
+		0x25, 0x65,        //   Logical Maximum (101)
+		0x75, 0x08,        //   Report Size (8)
+		0x95, 0x06,        //   Report Count (6)
+		0x81, 0x00,        //   Input (Data, Array) ; Key array
+
+		0xC0               // End Collection
 };
 
 typedef struct
@@ -80,22 +89,9 @@ typedef struct
 typedef struct
 {
 	UCHAR reportId;
-
-	UCHAR leftControl : 1;
-	UCHAR leftShift : 1;
-	UCHAR leftAlt : 1;
-	UCHAR leftGui : 1;
-	UCHAR rightControl : 1;
-	UCHAR rightShift : 1;
-	UCHAR rightAlt : 1;
-	UCHAR rightGui : 1;
-
-	UCHAR key1;
-	UCHAR key2;
-	UCHAR key3;
-	UCHAR key4;
-	UCHAR key5;
-	UCHAR key6;
+	UCHAR modifiers;
+	UCHAR reserved;
+	UCHAR key[6];
 } KeyboardHidReport;
 
 #pragma pack (pop)

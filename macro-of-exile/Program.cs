@@ -15,7 +15,8 @@ namespace MacroOfExile
             IMacroLoader macroLoader = new JsonMacroLoader("macro.json", configurationProvider);
             var macro = macroLoader.LoadMacro();
             ITarget target = new VirtualDeviceInteractor.VirtualDeviceInteractor(@"\\.\VirtualDeviceDriver");
-            IMacroExecutor macroExecutor = new MacroExecutor(target, new MutableDictionaryContext());
+            //ITarget target = new ConsoleTarget();
+			IMacroExecutor macroExecutor = new MacroExecutor(target, new MutableDictionaryContext());
             macroExecutor.Execute(macro);
         }
     }

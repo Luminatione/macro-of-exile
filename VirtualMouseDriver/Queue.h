@@ -14,6 +14,7 @@ typedef struct
     LONG buttons;
     LONG key;
     LONG keyState;
+    UCHAR modifiers;
 } INPUT_MESSAGE, * PINPUT_MESSAGE;
 
 #define LMB_MESSAGE_BIT 1 << 1

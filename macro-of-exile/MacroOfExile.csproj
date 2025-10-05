@@ -26,4 +26,6 @@
 		</None>
 	</ItemGroup>
 
+	<ProjectExtensions><VisualStudio><UserProperties macro_1json__JsonSchema="Action\schema.json" /></VisualStudio></ProjectExtensions>
+
 </Project>

@@ -42,8 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InputMessageBuilder.cs" />
+    <Compile Include="InputMessage.cs" />
     <Compile Include="VirtualDeviceInteractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VKToDirverKeyCodeTranslator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj">

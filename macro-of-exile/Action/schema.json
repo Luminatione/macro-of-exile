@@ -1,0 +1,89 @@
+{
+  "oneOf": [
+    {
+      "title": "SingleClickAction",
+      "type": "object",
+      "properties": {
+        "$type": { "const": "SingleClick" },
+        "Id": { "type": "string" },
+        "IsLast": { "type": "boolean" },
+        "OnSuccess": { "type": "string" },
+        "OnFailure": { "type": "string" },
+        "X": {
+          "type": "object",
+          "properties": {
+            "Expression": { "type": "string" }
+          },
+          "required": [ "Expression" ]
+        },
+        "Y": {
+          "type": "object",
+          "properties": {
+            "Expression": { "type": "string" }
+          },
+          "required": [ "Expression" ]
+        },
+        "Button": { "type": "integer" }
+      },
+      "required": [ "$type", "Id", "X", "Y", "Button" ]
+    },
+    {
+      "title": "SetButtonStateAction",
+      "type": "object",
+      "properties": {
+        "$type": { "const": "SetButtonState" },
+        "Id": { "type": "string" },
+        "IsLast": { "type": "boolean" },
+        "OnSuccess": { "type": "string" },
+        "OnFailure": { "type": "string" },
+        "X": {
+          "type": "object",
+          "properties": {
+            "Expression": { "type": "string" }
+          },
+          "required": [ "Expression" ]
+        },
+        "Y": {
+          "type": "object",
+          "properties": {
+            "Expression": { "type": "string" }
+          },
+          "required": [ "Expression" ]
+        },
+        "Button": { "type": "integer" },
+        "State": { "type": "integer" }
+      },
+      "required": [ "$type", "Id", "X", "Y", "Button", "State" ]
+    },
+    {
+      "title": "SetKeyStateAction",
+      "type": "object",
+      "properties": {
+        "$type": { "const": "SetKeyState" },
+        "Id": { "type": "string" },
+        "IsLast": { "type": "boolean" },
+        "OnSuccess": { "type": "string" },
+        "OnFailure": { "type": "string" },
+        "Key": { "type": "integer" },
+        "State": { "type": "integer" }
+      },
+      "required": [ "$type", "Id", "Key", "State" ]
+    },
+    {
+      "title": "InitializeContextAction",
+      "type": "object",
+      "properties": {
+        "$type": { "const": "InitializeContext" },
+        "Id": { "type": "string" },
+        "IsLast": { "type": "boolean" },
+        "OnSuccess": { "type": "string" },
+        "OnFailure": { "type": "string" },
+        "Variables": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "required": [ "$type", "Id", "Variables" ]
+    }
+  ]
+}

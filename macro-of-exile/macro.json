@@ -3,64 +3,203 @@
     {
       "$type": "SetKeyState",
       "Id": "0",
-      "Key": 11,
+      "Key": 72,
       "State": 1,
-      "OnSuccess": "2"
+      "OnSuccess": "8",
+      "OnFailure": "0"
     },
-
-    {
-      "$type": "SetKeyState",
-      "Id": "2",
-      "Key": 8,
-      "State": 1,
-      "OnSuccess": "4"
-    },
-
-    {
-      "$type": "SetKeyState",
-      "Id": "4",
-      "Key": 15,
-      "State": 1,
-      "OnSuccess": "6"
-    },
-
-    {
-      "$type": "SetKeyState",
-      "Id": "6",
-      "Key": 15,
-      "State": 1,
-      "OnSuccess": "8"
-    },
-
     {
       "$type": "SetKeyState",
       "Id": "8",
-      "Key": 18,
-      "State": 1,
-      "OnSuccess": "9"
+      "Key": 72,
+      "State": 0,
+      "OnSuccess": "9",
+      "OnFailure": "0"
     },
     {
       "$type": "SetKeyState",
       "Id": "9",
+      "Key": 69,
+      "State": 1,
+      "OnSuccess": "10",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "10",
+      "Key": 69,
+      "State": 0,
+      "OnSuccess": "11",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "11",
+      "Key": 76,
+      "State": 1,
+      "OnSuccess": "12",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "12",
+      "Key": 76,
+      "State": 0,
+      "OnSuccess": "13",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "13",
+      "Key": 76,
+      "State": 1,
+      "OnSuccess": "14",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "14",
+      "Key": 76,
+      "State": 0,
+      "OnSuccess": "15",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "15",
+      "Key": 79,
+      "State": 1,
+      "OnSuccess": "16",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "16",
+      "Key": 79,
+      "State": 0,
+      "OnSuccess": "17",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "17",
+      "Key": 32,
+      "State": 1,
+      "OnSuccess": "18",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "18",
+      "Key": 32,
+      "State": 0,
+      "OnSuccess": "19",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "19",
+      "Key": 87,
+      "State": 1,
+      "OnSuccess": "20",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "20",
+      "Key": 87,
+      "State": 0,
+      "OnSuccess": "21",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "21",
+      "Key": 79,
+      "State": 1,
+      "OnSuccess": "22",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "22",
+      "Key": 79,
+      "State": 0,
+      "OnSuccess": "23",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "23",
+      "Key": 82,
+      "State": 1,
+      "OnSuccess": "24",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "24",
+      "Key": 82,
+      "State": 0,
+      "OnSuccess": "25",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "25",
+      "Key": 76,
+      "State": 1,
+      "OnSuccess": "26",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "26",
+      "Key": 76,
+      "State": 0,
+      "OnSuccess": "27",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "27",
+      "Key": 68,
+      "State": 1,
+      "OnSuccess": "28",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "28",
+      "Key": 68,
+      "State": 0,
+      "OnSuccess": "29",
+      "OnFailure": "0"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "29",
       "Key": 0,
       "State": 0,
-      "OnSuccess": "10"
+      "OnSuccess": "29b",
+      "OnFailure": "0"
     },
     {
       "$type": "SetButtonState",
-      "Id": "10",
-      "X": { "Expression": "100" },
-      "Y": { "Expression": "100" },
-      "Button": 0,
+      "Id": "29b",
+      "X": { "Expression": "150" },
+      "Y": { "Expression": "250" },
+      "Button": 2,
       "State": 1,
-      "OnSuccess": "11"
+      "OnSuccess": "29c",
+      "OnFailure": "0"
     },
     {
       "$type": "SetButtonState",
-      "Id": "11",
-      "X": { "Expression": "100" },
-      "Y": { "Expression": "100" },
-      "Button": 0,
+      "Id": "29c",
+      "X": { "Expression": "150" },
+      "Y": { "Expression": "250" },
+      "Button": 2,
       "State": 0,
       "IsLast": true
     }

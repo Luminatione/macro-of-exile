@@ -74,7 +74,8 @@ KeyboardHidReport* GetKeyboardReport(PINPUT_MESSAGE message)
 	RtlZeroMemory(report, sizeof(*report));
 	report->reportId = KEYBOARD_REPORT_ID;
 	report->key[0] = (UCHAR)message->key;
-
+	report->key[1] = 0xE1;
+	report->modifiers = message->modifiers;
 	return report;
 }
 

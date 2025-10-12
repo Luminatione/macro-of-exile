@@ -1,5 +1,7 @@
-﻿using Shared.Target;
+﻿using Shared.KeyState;
+using Shared.Target;
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace VirtualDeviceInteractor
@@ -58,10 +60,10 @@ namespace VirtualDeviceInteractor
 			SendInputState(builder.Build(), MouseInputEventControlCode);
 		}
 
-		public void SetKeyState(int key, int state)
-		{
+        public void SetKeysState(List<KeyState> keys)
+        {
             InputMessageBuilder builder = new InputMessageBuilder();
-			builder.Key(key, state);
+			keys.ForEach(k => builder.WithVKCode((int) k.Key, k.State));
 			SendInputState(builder.Build(), KeyboardInputEventControlCode);
 		}
 
@@ -92,5 +94,5 @@ namespace VirtualDeviceInteractor
 				Marshal.FreeHGlobal(buffer);
 			}
 		}
-	}
+    }
 }

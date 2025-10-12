@@ -1,4 +1,5 @@
-﻿using Shared.Target;
+﻿using Shared.KeyState;
+using Shared.Target;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,9 @@ namespace MacroOfExile.Target
             Console.WriteLine($"State of {button} set to {state}");
         }
 
-        public void SetKeyState(int key, int state)
+        public void SetKeysState(List<KeyState> keyStates)
         {
-            Console.WriteLine($"State of {key} set to {state}");
+            keyStates.ForEach(x => Console.WriteLine($"State of {x.Key} set to {x.State}"));
         }
     }
 }

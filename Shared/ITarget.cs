@@ -9,7 +9,7 @@ namespace Shared.Target
     public interface ITarget
     {
         void MoveMouse(int x, int y);
-        void SetKeyState(int key, int state);
+        void SetKeysState(List<KeyState.KeyState> keys);
         void SetButtonState(int button, int state);
         int GetMilisBetweenActions();
     }

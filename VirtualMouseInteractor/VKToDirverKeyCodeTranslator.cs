@@ -63,6 +63,28 @@ namespace VirtualDeviceInteractor
 			[0x0D] = 0x28, // Enter
 			[0x09] = 0x2B, // Tab
 			[0x1B] = 0x29, // Escape
+
+            // Modifier keys
+            [0xA0] = 0xE1, // VK_LSHIFT
+            [0xA1] = 0xE5, // VK_RSHIFT
+            [0xA2] = 0xE0, // VK_LCONTROL
+            [0xA3] = 0xE4, // VK_RCONTROL
+            [0xA4] = 0xE2, // VK_LMENU (Left Alt)
+            [0xA5] = 0xE6, // VK_RMENU (Right Alt)
+            [0x5B] = 0xE3, // VK_LWIN
+            [0x5C] = 0xE7 // VK_RWIN	
+        };
+
+		private static readonly Dictionary<int, byte> VkToModifierMask = new Dictionary<int, byte>()
+		{
+			[0xA0] = 0x02, // VK_LSHIFT
+			[0xA1] = 0x20, // VK_RSHIFT
+			[0xA2] = 0x01, // VK_LCONTROL
+			[0xA3] = 0x10, // VK_RCONTROL
+			[0xA4] = 0x04, // VK_LMENU (Left Alt)
+			[0xA5] = 0x40, // VK_RMENU (Right Alt)
+			[0x5B] = 0x08, // VK_LWIN
+			[0x5C] = 0x80 // VK_RWIN
 		};
 
         private static readonly HashSet<int> ModifierVks = new HashSet<int>
@@ -72,6 +94,8 @@ namespace VirtualDeviceInteractor
 			0xA1, // VK_RSHIFT
 			0xA2, // VK_LCONTROL
 			0xA3, // VK_RCONTROL
+			0xA4, // VK_LMENU
+			0xA5, // VK_RMENU
 			0x5B, // VK_LWIN
 			0x5C, // VK_RWIN
 		};
@@ -89,6 +113,12 @@ namespace VirtualDeviceInteractor
 		{
 			return VkToHid.ContainsKey(vk) ? VkToHid[vk] : throw new InvalidOperationException($"No key with vk {vk} found");
 		}
+
+		public byte GetModifierMask(int vk)
+		{
+			return VkToModifierMask.ContainsKey(vk) ? VkToModifierMask[vk] : throw new InvalidOperationException($"No modifier key with {vk} found");
+		}
+
         public bool IsKeyboardCharacter(int vk)
         {
 			return VkToHid.ContainsKey(vk);
@@ -103,6 +133,5 @@ namespace VirtualDeviceInteractor
         {
             return MouseButtonVks.Contains(vk);
         }
-
     }
 }

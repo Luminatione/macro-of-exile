@@ -3,7 +3,6 @@
 
 EXTERN_C_START
 
-
 #define MOUSE_REPORT_ID 1
 #define KEYBOARD_REPORT_ID 2
 

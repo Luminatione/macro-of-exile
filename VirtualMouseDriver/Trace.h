@@ -12,7 +12,7 @@
     WPP_LEVEL_LOGGER(flag)
 
 #define WPP_FLAG_LEVEL_ENABLED(flag, level)                                 \
-    (WPP_LEVEL_ENABLED(flag) &&                                             \
+    (WPP_LEVEL_ENABLED(flag) &&                                            \
      WPP_CONTROL(WPP_BIT_ ## flag).Level >= level)
 
 #define WPP_LEVEL_FLAGS_LOGGER(lvl,flags) \
@@ -21,15 +21,14 @@
 #define WPP_LEVEL_FLAGS_ENABLED(lvl, flags) \
            (WPP_LEVEL_ENABLED(flags) && WPP_CONTROL(WPP_BIT_ ## flags).Level >= lvl)
 
-#define WPP_RECORDER_FLAGS_LEVEL_ARGS(flags, lvl) WPP_RECORDER_LEVEL_FLAGS_ARGS(lvl, flags)
-#define WPP_RECORDER_FLAGS_LEVEL_FILTER(flags, lvl) WPP_RECORDER_LEVEL_FLAGS_FILTER(lvl, flags)
-
-//
-// This comment block is scanned by the trace preprocessor to define our
-// Trace function.
+// Define the format strings for TraceEvents
 //
 // begin_wpp config
 // FUNC Trace{FLAGS=MYDRIVER_ALL_INFO}(LEVEL, MSG, ...);
 // FUNC TraceEvents(LEVEL, FLAGS, MSG, ...);
+// USEPREFIX(TraceEvents, "%!STDPREFIX!");
 // end_wpp
 //
+
+#define WPP_RECORDER_FLAGS_LEVEL_ARGS(flags, lvl) WPP_RECORDER_LEVEL_FLAGS_ARGS(lvl, flags)
+#define WPP_RECORDER_FLAGS_LEVEL_FILTER(flags, lvl) WPP_RECORDER_LEVEL_FLAGS_FILTER(lvl, flags)

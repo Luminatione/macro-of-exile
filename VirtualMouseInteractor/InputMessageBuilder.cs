@@ -14,7 +14,7 @@ namespace VirtualDeviceInteractor
         private char yAxis = '\0';
         private List<(int key, int state)> keys = new List<(int, int)>();
         private int buttons = 0;
-        private int modifiers = 0;
+        private byte modifiers = 0;
 
         public InputMessage Build()
         {
@@ -42,25 +42,23 @@ namespace VirtualDeviceInteractor
 
         public InputMessageBuilder Modifier(int modifierCode)
         {
-            modifiers |= modifierCode;
+            modifiers |= VKToDirverKeyCodeTranslator.GetModifierMask(modifierCode);
             return this;
         }
 
         public InputMessageBuilder WithVKCode(int code, int status)
         {
-            if (VKToDirverKeyCodeTranslator.IsKeyboardCharacter(code))
+            if (VKToDirverKeyCodeTranslator.IsModifierKey(code))
             {
-                return Key(code, status);
+                return Key(code, status).Modifier(code);
             }
-
             if (VKToDirverKeyCodeTranslator.IsMouseButton(code))
             {
                 return Button(code, status);
             }
-
-            if (VKToDirverKeyCodeTranslator.IsModifierKey(code))
+            if (VKToDirverKeyCodeTranslator.IsKeyboardCharacter(code))
             {
-                return Modifier(code);
+                return Key(code, status);
             }
 
             throw new ArgumentException($"Code {code} is not valid button code");

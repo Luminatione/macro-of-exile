@@ -32,9 +32,9 @@ namespace MacroOfExile.Action.Actions
             }
 
             target.SetMouseState(0, 0, ToScreenSpace(xValue, configuration?.ResolutionX ?? short.MaxValue), ToScreenSpace(yValue, configuration?.ResolutionY ?? short.MaxValue));
-            Thread.Sleep(target.GetMilisBetweenActions());
+            Thread.Sleep(target.GetMilisBetweenShortActions());
 			target.SetMouseState((int) Button, 1, ToScreenSpace(xValue, configuration?.ResolutionX ?? short.MaxValue), ToScreenSpace(yValue, configuration?.ResolutionY ?? short.MaxValue));
-            Thread.Sleep(target.GetMilisBetweenActions());
+            Thread.Sleep(target.GetMilisBetweenShortActions());
 			target.SetMouseState((int) Button, 0, ToScreenSpace(xValue, configuration?.ResolutionX ?? short.MaxValue), ToScreenSpace(yValue, configuration?.ResolutionY ?? short.MaxValue));
 		}
         private short ToScreenSpace(int value, int resolution)

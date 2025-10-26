@@ -35,7 +35,7 @@ namespace MacroOfExile.Macro
 
                 string nextId = action.GetNext(target, context);
                 action = macro.Actions.Where(a => a.Id == nextId).First();
-                Thread.Sleep(target.GetMilisBetweenActions());
+                Thread.Sleep(target.GetMilisBetweenShortActions());
             } 
         }
     }

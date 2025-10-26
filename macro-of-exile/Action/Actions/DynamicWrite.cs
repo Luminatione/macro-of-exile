@@ -23,9 +23,9 @@ namespace MacroOfExile.Action.Actions
         {
             Text.GetValue(context).ToCharArray().ToList().ForEach(x => {
                 target.SetKeysState([new KeyState((VirtualKey)(VkKeyScan(x) & 0xFF), 1)]);
-                Thread.Sleep(target.GetMilisBetweenActions());
+                Thread.Sleep(target.GetMilisBetweenShortActions());
                 target.SetKeysState([new KeyState((VirtualKey)(VkKeyScan(x) & 0xFF), 0)]);
-                Thread.Sleep(target.GetMilisBetweenActions());
+                Thread.Sleep(target.GetMilisBetweenShortActions());
             });
 
             target.SetKeysState([new KeyState(0, 0)]);

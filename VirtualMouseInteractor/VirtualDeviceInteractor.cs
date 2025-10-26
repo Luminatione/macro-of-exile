@@ -82,7 +82,12 @@ namespace VirtualDeviceInteractor
 			return 50;
 		}
 
-		protected void SendInputState(InputMessage inputState, uint canal)
+        public int GetMilisBetweenShortActions()
+        {
+            return 10;
+        }
+
+        protected void SendInputState(InputMessage inputState, uint canal)
 		{
 			int size = Marshal.SizeOf<InputMessage>();
 			IntPtr buffer = Marshal.AllocHGlobal(size);

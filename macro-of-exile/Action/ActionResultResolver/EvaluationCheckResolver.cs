@@ -11,7 +11,7 @@ namespace MacroOfExile.Action.ActionResultResolver
 {
     internal class EvaluationCheckResolver : IActionResultResolver
     {
-        public required Evaluatebale Value { get; init; }
+        public required Evaluatebale Value { get; set; }
 
         public bool IsSuccess(ITarget target, IContext context)
         {

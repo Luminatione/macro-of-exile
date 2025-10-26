@@ -10,13 +10,29 @@
       "$type": "Break",
       "Id": "enableBreaking",
       "Key": 119,
-      "OnSuccess": "takeItem"
+      "OnSuccess": "openItemStash"
     },
     {
       "$type": "SingleClick",
-      "Id": "takeItem",
-      "X": { "Expression": "$EqFirstSlotX + $ItemCounter * $EqDelta" },
-      "Y": { "Expression": "$EqFirstSlotY" },
+      "Id": "openItemStash",
+      "X": { "Expression": "$StashItemTabX" },
+      "Y": { "Expression": "$StashItemTabY" },
+      "Button": 1,
+      "OnSuccess": "getItem"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "getItem",
+      "X": { "Expression": "$ItemStashFirstSlotX + $ColumnCounter * $EqDelta" },
+      "Y": { "Expression": "$ItemStashFirstSlotY + $RowCounter * $EqDelta" },
+      "Button": 1,
+      "OnSuccess": "openCurrencyTab"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "openCurrencyTab",
+      "X": { "Expression": "$CurrnecyItemTabX" },
+      "Y": { "Expression": "$CurrnecyItemTabY" },
       "Button": 1,
       "OnSuccess": "putItemIntoStash"
     },
@@ -42,16 +58,16 @@
       "X": { "Expression": "$ItemX" },
       "Y": { "Expression": "$ItemY" },
       "Button": 1,
-      "OnSuccess": "checkMS"
+      "OnSuccess": "checkLife"
     },
     {
       "$type": "Copy",
-      "Id": "checkMS",
+      "Id": "checkLife",
       "X": { "Expression": "$ItemX" },
       "Y": { "Expression": "$ItemY" },
       "Resolver": {
         "$type": "RegexOnClipboard",
-        "Regex": "Movement Speed"
+        "Regex": "maximum Life"
       },
       "OnSuccess": "takeItemFromStash",
       "OnFailure": "checkOpenPrefix"
@@ -82,7 +98,7 @@
       "X": { "Expression": "$ItemX" },
       "Y": { "Expression": "$ItemY" },
       "Button": 1,
-      "OnSuccess": "checkMS"
+      "OnSuccess": "checkLife"
     },
     {
       "$type": "SingleClick",
@@ -90,22 +106,65 @@
       "X": { "Expression": "$ItemX" },
       "Y": { "Expression": "$ItemY" },
       "Button": 1,
-      "OnSuccess": "putItemIntoEq"
+      "OnSuccess": "openStorage"
     },
     {
       "$type": "SingleClick",
-      "Id": "putItemIntoEq",
-      "X": { "Expression": "$EqFirstSlotX + $ItemCounter * $EqDelta" },
-      "Y": { "Expression": "$EqFirstSlotY" },
+      "Id": "openStorage",
+      "X": { "Expression": "$StashItemTabX" },
+      "Y": { "Expression": "$StashItemTabY" },
       "Button": 1,
-      "OnSuccess": "nextItem"
+      "OnSuccess": "putItemIntoStorage"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "putItemIntoStorage",
+      "X": { "Expression": "$ItemStashFirstSlotX + $ColumnCounter * $EqDelta" },
+      "Y": { "Expression": "$ItemStashFirstSlotY + $RowCounter * $EqDelta" },
+      "Button": 1,
+      "OnSuccess": "updateItemCounter"
     },
     {
       "$type": "SetVariable",
-      "Id": "nextItem",
+      "Id": "updateItemCounter",
       "Variable": "ItemCounter",
       "Value": { "Expression": "$ItemCounter + 1" },
-      "OnSuccess": "takeItem"
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "$ItemCounter >= 63"
+        }
+      },
+      "OnSuccess": "end",
+      "OnFailure": "updateRow"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "updateRow",
+      "Variable": "RowCounter",
+      "Value": { "Expression": "$RowCounter + 1" },
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "$RowCounter < 24"
+        }
+      },
+      "OnSuccess": "getItem",
+      "OnFailure": "resetRowCounter"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "resetRowCounter",
+      "Variable": "RowCounter",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "updateColumnCounter"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "updateColumnCounter",
+      "Variable": "ColumnCounter",
+      "Value": { "Expression": "$ColumnCounter + 1" },
+      "OnSuccess": "getItem"
     },
     {
       "$type": "SingleClick",

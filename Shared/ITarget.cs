@@ -12,6 +12,7 @@ namespace Shared.Target
         void SetKeysState(List<KeyState.KeyState> keys);
         void SetMouseState(int button, int state, short x, short y);
         int GetMilisBetweenActions();
+        int GetMilisBetweenShortActions();
         void QueueStop();
         bool IsStopQueued();
     }

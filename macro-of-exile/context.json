@@ -3,10 +3,18 @@
   "AugY": 655,
   "AltX": 225,
   "AltY": 540,
+  "RegalX": 872,
+  "RegalY": 540,
   "ItemX": 666,
   "ItemY": 927,
-  "EqFirstSlotX": 2640,
-  "EqFirstSlotY": 1278,
-  "EqDelta": 200,
-  "ItemCounter": 0
+  "ItemStashFirstSlotX": 54,
+  "ItemStashFirstSlotY": 285,
+  "StashItemTabX": 1484,
+  "StashItemTabY": 373,
+  "CurrnecyItemTabX": 1484,
+  "CurrnecyItemTabY": 794,
+  "EqDelta": 52,
+  "ItemCounter": 0,
+  "RowCounter": 0,
+  "ColumnCounter": 0
 }

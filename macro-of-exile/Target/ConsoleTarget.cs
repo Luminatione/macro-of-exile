@@ -39,5 +39,10 @@ namespace MacroOfExile.Target
         }
 
         public bool IsStopQueued() => isStopQueued;
+
+        public int GetMilisBetweenShortActions()
+        {
+            return 1;
+        }
     }
 }

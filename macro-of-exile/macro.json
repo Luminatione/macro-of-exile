@@ -1,298 +1,118 @@
 {
   "Actions": [
     {
-      "$type": "SetKeyState",
+      "$type": "InitializeContextFromFile",
       "Id": "0",
-      "KeyStates": [
-        {
-          "Key": 72,
-          "State": 1
-        },
-        {
-          "Key": 160,
-          "State": 1
-        }
-      ],
-      "OnSuccess": "8",
-      "OnFailure": "0"
+      "FilePath": "context.json",
+      "OnSuccess": "enableBreaking"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "8",
-      "KeyStates": [
-        {
-          "Key": 72,
-          "State": 0
-        }
-      ],
-      "OnSuccess": "9",
-      "OnFailure": "0"
+      "$type": "Break",
+      "Id": "enableBreaking",
+      "Key": 119,
+      "OnSuccess": "takeItem"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "9",
-      "KeyStates": [
-        {
-          "Key": 69,
-          "State": 1
-        },
-        {
-          "Key": 160,
-          "State": 1
-        },
-        {
-          "Key": 165,
-          "State": 1
-        }
-      ],
-      "OnSuccess": "10",
-      "OnFailure": "0"
+      "$type": "SingleClick",
+      "Id": "takeItem",
+      "X": { "Expression": "$EqFirstSlotX + $ItemCounter * $EqDelta" },
+      "Y": { "Expression": "$EqFirstSlotY" },
+      "Button": 1,
+      "OnSuccess": "putItemIntoStash"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "10",
-      "KeyStates": [
-        {
-          "Key": 69,
-          "State": 0
-        }
-      ],
-      "OnSuccess": "11",
-      "OnFailure": "0"
+      "$type": "SingleClick",
+      "Id": "putItemIntoStash",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 1,
+      "OnSuccess": "takeAlt"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "11",
-      "KeyStates": [
-        {
-          "Key": 76,
-          "State": 1
-        },
-        {
-          "Key": 160,
-          "State": 1
-        }
-      ],
-      "OnSuccess": "12",
-      "OnFailure": "0"
+      "$type": "SingleClick",
+      "Id": "takeAlt",
+      "X": { "Expression": "$AltX" },
+      "Y": { "Expression": "$AltY" },
+      "Button": 2,
+      "OnSuccess": "useAlt"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "12",
-      "KeyStates": [
-        {
-          "Key": 76,
-          "State": 0
-        }
-      ],
-      "OnSuccess": "13",
-      "OnFailure": "0"
+      "$type": "SingleClick",
+      "Id": "useAlt",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 1,
+      "OnSuccess": "checkMS"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "13",
-      "KeyStates": [
-        {
-          "Key": 76,
-          "State": 1
-        }
-      ],
-      "OnSuccess": "14",
-      "OnFailure": "0"
+      "$type": "Copy",
+      "Id": "checkMS",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "Movement Speed"
+      },
+      "OnSuccess": "takeItemFromStash",
+      "OnFailure": "checkOpenPrefix"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "14",
-      "KeyStates": [
-        {
-          "Key": 76,
-          "State": 0
-        }
-      ],
-      "OnSuccess": "15",
-      "OnFailure": "0"
+      "$type": "Copy",
+      "Id": "checkOpenPrefix",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "Prefix"
+      },
+      "OnSuccess": "takeAlt",
+      "OnFailure": "takeAug"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "15",
-      "KeyStates": [
-        {
-          "Key": 79,
-          "State": 1
-        },
-        {
-          "Key": 160,
-          "State": 1
-        }
-      ],
-      "OnSuccess": "16",
-      "OnFailure": "0"
+      "$type": "SingleClick",
+      "Id": "takeAug",
+      "X": { "Expression": "$AugX" },
+      "Y": { "Expression": "$AugY" },
+      "Button": 2,
+      "OnSuccess": "useAug"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "16",
-      "KeyStates": [
-        {
-          "Key": 79,
-          "State": 0
-        }
-      ],
-      "OnSuccess": "17",
-      "OnFailure": "0"
+      "$type": "SingleClick",
+      "Id": "useAug",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 1,
+      "OnSuccess": "checkMS"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "17",
-      "KeyStates": [
-        {
-          "Key": 32,
-          "State": 1
-        }
-      ],
-      "OnSuccess": "18",
-      "OnFailure": "0"
+      "$type": "SingleClick",
+      "Id": "takeItemFromStash",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 1,
+      "OnSuccess": "putItemIntoEq"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "18",
-      "KeyStates": [
-        {
-          "Key": 32,
-          "State": 0
-        }
-      ],
-      "OnSuccess": "19",
-      "OnFailure": "0"
+      "$type": "SingleClick",
+      "Id": "putItemIntoEq",
+      "X": { "Expression": "$EqFirstSlotX + $ItemCounter * $EqDelta" },
+      "Y": { "Expression": "$EqFirstSlotY" },
+      "Button": 1,
+      "OnSuccess": "nextItem"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "19",
-      "KeyStates": [
-        {
-          "Key": 87,
-          "State": 1
-        }
-      ],
-      "OnSuccess": "20",
-      "OnFailure": "0"
+      "$type": "SetVariable",
+      "Id": "nextItem",
+      "Variable": "ItemCounter",
+      "Value": { "Expression": "$ItemCounter + 1" },
+      "OnSuccess": "takeItem"
     },
     {
-      "$type": "SetKeyState",
-      "Id": "20",
-      "KeyStates": [
-        {
-          "Key": 87,
-          "State": 0
-        }
-      ],
-      "OnSuccess": "21",
-      "OnFailure": "0"
-    },
-    {
-      "$type": "SetKeyState",
-      "Id": "21",
-      "KeyStates": [
-        {
-          "Key": 79,
-          "State": 1
-        }
-      ],
-      "OnSuccess": "22",
-      "OnFailure": "0"
-    },
-    {
-      "$type": "SetKeyState",
-      "Id": "22",
-      "KeyStates": [
-        {
-          "Key": 79,
-          "State": 0
-        }
-      ],
-      "OnSuccess": "23",
-      "OnFailure": "0"
-    },
-    {
-      "$type": "SetKeyState",
-      "Id": "23",
-      "KeyStates": [
-        {
-          "Key": 82,
-          "State": 1
-        }
-      ],
-      "OnSuccess": "24",
-      "OnFailure": "0"
-    },
-    {
-      "$type": "SetKeyState",
-      "Id": "24",
-      "KeyStates": [
-        {
-          "Key": 82,
-          "State": 0
-        }
-      ],
-      "OnSuccess": "25",
-      "OnFailure": "0"
-    },
-    {
-      "$type": "SetKeyState",
-      "Id": "25",
-      "KeyStates": [
-        {
-          "Key": 76,
-          "State": 1
-        }
-      ],
-      "OnSuccess": "26",
-      "OnFailure": "0"
-    },
-    {
-      "$type": "SetKeyState",
-      "Id": "26",
-      "KeyStates": [
-        {
-          "Key": 76,
-          "State": 0
-        }
-      ],
-      "OnSuccess": "27",
-      "OnFailure": "0"
-    },
-    {
-      "$type": "SetKeyState",
-      "Id": "27",
-      "KeyStates": [
-        {
-          "Key": 68,
-          "State": 1
-        }
-      ],
-      "OnSuccess": "28",
-      "OnFailure": "0"
-    },
-    {
-      "$type": "SetKeyState",
-      "Id": "28",
-      "KeyStates": [
-        {
-          "Key": 68,
-          "State": 0
-        }
-      ],
-      "OnSuccess": "29",
-      "OnFailure": "0"
-    },
-    {
-      "$type": "SetKeyState",
-      "Id": "29",
-      "KeyStates": [
-        {
-          "Key": 0,
-          "State": 0
-        }
-      ],
+      "$type": "SingleClick",
+      "Id": "end",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 0,
       "IsLast": true
     }
   ]

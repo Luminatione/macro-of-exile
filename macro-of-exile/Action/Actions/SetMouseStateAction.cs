@@ -7,18 +7,19 @@ using MacroOfExile.Action.ActionResultResolver;
 using MacroOfExile.Action.Actions.Enums;
 using MacroOfExile.Exceptions;
 using MacroOfExile.Macro.Context;
+using MacroOfExile.Configuration;
 using Shared.Target;
 
 namespace MacroOfExile.Action.Actions
 {
-    public class SetButtonStateAction(string id, IActionResultResolver? resolver, string onSuccess, string onFailure, bool isLast = false) : Action(id, resolver, onSuccess, onFailure, isLast)
+    public class SetMouseStateAction(string id, IActionResultResolver? resolver, string onSuccess, string onFailure, bool isLast = false) : Action(id, resolver, onSuccess, onFailure, isLast)
     {
         public required Evaluatebale X { get; set; }
         public required Evaluatebale Y { get; set; }
         public required MouseButton Button { get; set; }
         public required int State { get; set; }
 
-        public override void Execute(ITarget target, IContext context)
+        public override void Execute(ITarget target, IContext context, MacroConfiguration? configuration)
         {
             if (!int.TryParse(X.GetValue(context), out int xValue))
             {
@@ -30,8 +31,12 @@ namespace MacroOfExile.Action.Actions
                 throw new UncastableVariableException($"Failed to cast variable to target type in expression {Y.Expression}");
             }
 
-            target.MoveMouse(xValue, yValue);
-            target.SetButtonState((int) Button, State);
+            target.SetMouseState((int) Button, State, ToScreenSpace(xValue, configuration?.ResolutionX ?? short.MaxValue), ToScreenSpace(yValue, configuration?.ResolutionY ?? short.MaxValue));
+        }
+
+        private short ToScreenSpace(int value, int resolution)
+        {
+            return (short) value;//(short) ((float) value / resolution * short.MaxValue);
         }
     }
 }

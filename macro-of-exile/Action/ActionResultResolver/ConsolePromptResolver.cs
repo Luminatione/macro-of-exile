@@ -1,4 +1,5 @@
-﻿using MacroOfExile.Target;
+﻿using MacroOfExile.Macro.Context;
+using MacroOfExile.Target;
 using Shared.Target;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace MacroOfExile.Action.ActionResultResolver
 {
     internal class ConsolePromptResolver : IActionResultResolver
     {
-        public bool IsSuccess(ITarget target)
+        public bool IsSuccess(ITarget target, IContext context)
         {
             Console.WriteLine("Is success?: ");
             string response = Console.ReadLine() ?? "0";

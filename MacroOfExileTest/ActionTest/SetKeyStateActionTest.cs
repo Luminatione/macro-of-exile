@@ -41,7 +41,7 @@ namespace MacroOfExileTest.ActionTest
             };
 
             // Act
-            setKeyStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext());
+            setKeyStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext(), null);
 
             // Assert
             _mockTarget.Verify(t => t.SetKeysState(keyStates), Times.Once);
@@ -64,7 +64,7 @@ namespace MacroOfExileTest.ActionTest
             };
 
             // Act & Assert
-            Assert.DoesNotThrow(() => setKeyStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext()));
+            Assert.DoesNotThrow(() => setKeyStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext(), null));
         }
     }
 }

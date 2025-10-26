@@ -28,7 +28,7 @@ namespace MacroOfExileTest.ActionTest
 		public void Execute_WhenValidInputs_TargetIsCalled()
 		{
 			// Arrange
-			var setButtonStateAction = new SetButtonStateAction(
+			var setButtonStateAction = new SetMouseStateAction(
 				id: "3",
 				resolver: null,
 				onSuccess: "next",
@@ -42,18 +42,17 @@ namespace MacroOfExileTest.ActionTest
 			};
 
 			// Act
-			setButtonStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext());
+			setButtonStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext(), null);
 
 			// Assert
-			_mockTarget.Verify(t => t.MoveMouse(300, 400), Times.Once);
-			_mockTarget.Verify(t => t.SetButtonState((int)MouseButton.RMB, 1), Times.Once);
+			_mockTarget.Verify(t => t.SetMouseState((int)MouseButton.RMB, 1, 300, 400), Times.Once);
 		}
 
 		[Test]
 		public void Execute_WhenInvalidButton_DoesntThrow()
 		{
 			// Arrange
-			var setButtonStateAction = new SetButtonStateAction(
+			var setButtonStateAction = new SetMouseStateAction(
 				id: "4",
 				resolver: null,
 				onSuccess: "next",
@@ -67,14 +66,14 @@ namespace MacroOfExileTest.ActionTest
 			};
 
 			// Act & Assert
-			Assert.DoesNotThrow(() => setButtonStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext()));
+			Assert.DoesNotThrow(() => setButtonStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext(), null));
 		}
 
 		[Test]
 		public void Execute_WhenXIsInvalid_ThrowsUncastableVariableException()
 		{
 			// Arrange
-			var setButtonStateAction = new SetButtonStateAction(
+			var setButtonStateAction = new SetMouseStateAction(
 				id: "5",
 				resolver: null,
 				onSuccess: "next",
@@ -88,14 +87,14 @@ namespace MacroOfExileTest.ActionTest
 			};
 
 			// Act & Assert
-			Assert.Throws<UncastableVariableException>(() => setButtonStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext()));
+			Assert.Throws<UncastableVariableException>(() => setButtonStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext(), null));
 		}
 
 		[Test]
 		public void Execute_WhenYIsInvalid_ThrowsUncastableVariableException()
 		{
 			// Arrange
-			var setButtonStateAction = new SetButtonStateAction(
+			var setButtonStateAction = new SetMouseStateAction(
 				id: "6",
 				resolver: null,
 				onSuccess: "next",
@@ -109,7 +108,7 @@ namespace MacroOfExileTest.ActionTest
 			};
 
 			// Act & Assert
-			Assert.Throws<UncastableVariableException>(() => setButtonStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext()));
+			Assert.Throws<UncastableVariableException>(() => setButtonStateAction.Execute(_mockTarget.Object, new MutableDictionaryContext(), null));
 		}
 	}
 }

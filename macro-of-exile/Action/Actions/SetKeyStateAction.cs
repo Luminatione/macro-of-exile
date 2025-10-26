@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MacroOfExile.Action.ActionResultResolver;
+using MacroOfExile.Configuration;
 using MacroOfExile.Exceptions;
 using MacroOfExile.Macro.Context;
 using Shared.KeyState;
@@ -15,7 +16,7 @@ namespace MacroOfExile.Action.Actions
     {
         public required List<KeyState> KeyStates { get; set; }
 
-        public override void Execute(ITarget target, IContext context)
+        public override void Execute(ITarget target, IContext context, MacroConfiguration? configuration)
         {
             target.SetKeysState(KeyStates);
         }

@@ -1,0 +1,68 @@
+{
+  "Actions": [
+    {
+      "$type": "InitializeContextFromFile",
+      "Id": "0",
+      "FilePath": "context.json",
+      "OnSuccess": "enableBreaking"
+    },
+    {
+      "$type": "Break",
+      "Id": "enableBreaking",
+      "Key": 119,
+      "OnSuccess": "takeAlt"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "takeAlt",
+      "X": { "Expression": "$AltX" },
+      "Y": { "Expression": "$AltY" },
+      "Button": 2,
+      "OnSuccess": "useAlt"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "useAlt",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 1,
+      "OnSuccess": "checkOpenMod"
+    },
+    {
+      "$type": "Copy",
+      "Id": "checkOpenMod",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "Prefix(.*\n)*.*Suffix"
+      },
+      "OnSuccess": "takeAlt",
+      "OnFailure": "takeAug"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "takeAug",
+      "X": { "Expression": "$AugX" },
+      "Y": { "Expression": "$AugY" },
+      "Button": 2,
+      "OnSuccess": "useAug"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "useAug",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 1,
+      "OnSuccess": "takeAlt"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "end",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 0,
+      "IsLast": true
+    }
+  ]
+}

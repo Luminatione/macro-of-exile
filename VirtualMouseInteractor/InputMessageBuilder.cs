@@ -10,8 +10,8 @@ namespace VirtualDeviceInteractor
     {
         private VKToDirverKeyCodeTranslator VKToDirverKeyCodeTranslator = new VKToDirverKeyCodeTranslator();
 
-        private char xAxis = '\0';
-        private char yAxis = '\0';
+        private short xAxis = 0;
+        private short yAxis = 0;
         private List<(int key, int state)> keys = new List<(int, int)>();
         private int buttons = 0;
         private byte modifiers = 0;
@@ -21,7 +21,7 @@ namespace VirtualDeviceInteractor
             return new InputMessage(xAxis, yAxis, buttons, keys.FirstOrDefault().key, keys.FirstOrDefault().state, modifiers);
         }
 
-        public InputMessageBuilder Move(char xAxis, char yAxis)
+        public InputMessageBuilder Move(short xAxis, short yAxis)
         {
             this.xAxis = xAxis;
             this.yAxis = yAxis;

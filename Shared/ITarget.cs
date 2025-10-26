@@ -10,7 +10,9 @@ namespace Shared.Target
     {
         void MoveMouse(int x, int y);
         void SetKeysState(List<KeyState.KeyState> keys);
-        void SetButtonState(int button, int state);
+        void SetMouseState(int button, int state, short x, short y);
         int GetMilisBetweenActions();
+        void QueueStop();
+        bool IsStopQueued();
     }
 }

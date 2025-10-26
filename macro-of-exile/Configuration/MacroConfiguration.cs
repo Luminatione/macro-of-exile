@@ -10,5 +10,7 @@ namespace MacroOfExile.Configuration
     {
         public int MinShortDelay { get; set; }
         public int MaxShortDelay { get; set; }
+        public int ResolutionX { get; set; }
+        public int ResolutionY { get; set; }
     }
 }

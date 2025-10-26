@@ -26,7 +26,7 @@ namespace MacroOfExileTest.ActionTest
             action.Variables.Add("b", "2");
 
             //Act
-            action.Execute(target.Object, context.Object);
+            action.Execute(target.Object, context.Object, null);
 
             //Assert
             context.Verify(c => c.SetVariable(It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(2));
@@ -39,7 +39,7 @@ namespace MacroOfExileTest.ActionTest
             InitializeContextAction action = new("0", "1");
 
             //Act
-            action.Execute(target.Object, context.Object);
+            action.Execute(target.Object, context.Object, null);
 
             //Assert
             context.Verify(c => c.SetVariable(It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(2));

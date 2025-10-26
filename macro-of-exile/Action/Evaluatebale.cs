@@ -1,4 +1,5 @@
 ﻿using MacroOfExile.Macro.Context;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace MacroOfExile.Action
             Expression.Split(" ").Where(t => t.StartsWith('$')).ToList().ForEach(t => variableValues.TryAdd(t, context.GetVariable(t.Substring(1))));
             string result = new(Expression);
             variableValues.Keys.ToList().ForEach(k => result = result.Replace(k, variableValues[k].ToString()));
-            return result;
+            return CSharpScript.EvaluateAsync(result).Result?.ToString() ?? string.Empty;
         }
     }
 }

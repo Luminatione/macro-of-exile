@@ -38,6 +38,8 @@
         Help = 0x2F,
         LShift = 0xA0,
         RMenu = 0xA5,
+        LControl = 0xA2,
+        LAlt = 0xA4,
 
         // Number keys
         D0 = 0x30,

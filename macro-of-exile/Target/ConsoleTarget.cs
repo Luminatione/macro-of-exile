@@ -10,6 +10,8 @@ namespace MacroOfExile.Target
 {
     internal class ConsoleTarget : ITarget
     {
+        private volatile bool isStopQueued = false;
+
 		public int GetMilisBetweenActions()
 		{
             return 1;
@@ -20,14 +22,22 @@ namespace MacroOfExile.Target
             Console.WriteLine($"Mouse moved to {x} {y}");
         }
 
-        public void SetButtonState(int button, int state)
+        public void SetMouseState(int button, int state, short x, short y)
         {
-            Console.WriteLine($"State of {button} set to {state}");
+            Console.WriteLine($"State of {button} set to {state}. Mouse moved to {x} {y}");
         }
 
         public void SetKeysState(List<KeyState> keyStates)
         {
             keyStates.ForEach(x => Console.WriteLine($"State of {x.Key} set to {x.State}"));
         }
+
+        public void QueueStop()
+        {
+            Console.WriteLine("Stop Queued");
+            isStopQueued = true;
+        }
+
+        public bool IsStopQueued() => isStopQueued;
     }
 }

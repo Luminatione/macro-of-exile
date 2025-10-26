@@ -8,6 +8,8 @@ namespace VirtualDeviceInteractor
 {
 	public class VirtualDeviceInteractor : IDisposable, ITarget
 	{
+		private volatile bool isStopQueued = false;
+
 		protected static readonly uint MouseInputEventControlCode = CTL_CODE(FILE_DEVICE_UNKNOWN, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS);
 		protected static readonly uint KeyboardInputEventControlCode = CTL_CODE(FILE_DEVICE_UNKNOWN, 0x801, METHOD_BUFFERED, FILE_ANY_ACCESS);
 
@@ -56,7 +58,7 @@ namespace VirtualDeviceInteractor
 		public void MoveMouse(int x, int y)
 		{
 			InputMessageBuilder builder = new InputMessageBuilder();
-			builder.Move((char)x, (char)y);
+			builder.Move((short) x, (short) y);
 			SendInputState(builder.Build(), MouseInputEventControlCode);
 		}
 
@@ -67,16 +69,17 @@ namespace VirtualDeviceInteractor
 			SendInputState(builder.Build(), KeyboardInputEventControlCode);
 		}
 
-		public void SetButtonState(int button, int state)
+		public void SetMouseState(int button, int state, short x, short y)
 		{
             InputMessageBuilder builder = new InputMessageBuilder();
 			builder.Button(button, state);
+			builder.Move(x, y);
             SendInputState(builder.Build(), MouseInputEventControlCode);
 		}
 
 		public int GetMilisBetweenActions()
 		{
-			return 20;
+			return 50;
 		}
 
 		protected void SendInputState(InputMessage inputState, uint canal)
@@ -94,5 +97,12 @@ namespace VirtualDeviceInteractor
 				Marshal.FreeHGlobal(buffer);
 			}
 		}
+
+        public void QueueStop()
+        {
+            isStopQueued = true;
+        }
+
+		public bool IsStopQueued() => isStopQueued;
     }
 }

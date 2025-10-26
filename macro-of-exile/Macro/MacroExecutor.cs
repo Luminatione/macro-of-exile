@@ -25,15 +25,15 @@ namespace MacroOfExile.Macro
         public void Execute(Macro macro)
         {
             Action.Action action = macro.Actions.Where(a => a.Id == "0").FirstOrDefault() ?? throw new MissingFirstMacroElementException("Macro has to contain element with ID equal 0");
-            while (true)
+            while (!target.IsStopQueued())
             {
-                action.Execute(target, context);
+                action.Execute(target, context, macro.MacroConfiguration);
                 if (action.IsLast)
                 {
                     break;
                 }
 
-                string nextId = action.GetNext(target);
+                string nextId = action.GetNext(target, context);
                 action = macro.Actions.Where(a => a.Id == nextId).First();
                 Thread.Sleep(target.GetMilisBetweenActions());
             } 

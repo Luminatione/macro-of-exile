@@ -43,12 +43,11 @@ namespace MacroOfExileTest.ActionTest
             _mockTarget.Setup(m => m.GetMilisBetweenActions()).Returns(0);
 
             // Act
-            singleClickAction.Execute(_mockTarget.Object, new MutableDictionaryContext());
+            singleClickAction.Execute(_mockTarget.Object, new MutableDictionaryContext(), null);
 
             // Assert
-            _mockTarget.Verify(t => t.MoveMouse(100, 200), Times.Once);
-            _mockTarget.Verify(t => t.SetButtonState((int) MouseButton.LMB, 1), Times.Once);
-            _mockTarget.Verify(t => t.SetButtonState((int) MouseButton.LMB, 0), Times.Once);
+            _mockTarget.Verify(t => t.SetMouseState((int) MouseButton.LMB, 1, 100, 200), Times.Once);
+            _mockTarget.Verify(t => t.SetMouseState((int) MouseButton.LMB, 0, 100, 200), Times.Once);
 			_mockTarget.Verify(t => t.GetMilisBetweenActions(), Times.Exactly(2));
 		}
 
@@ -69,7 +68,7 @@ namespace MacroOfExileTest.ActionTest
             };
 
             // Act & Assert
-            Assert.DoesNotThrow(() => singleClickAction.Execute(_mockTarget.Object, new MutableDictionaryContext()));
+            Assert.DoesNotThrow(() => singleClickAction.Execute(_mockTarget.Object, new MutableDictionaryContext(), null));
         }
     }
 }

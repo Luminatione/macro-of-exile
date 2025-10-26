@@ -38,8 +38,8 @@ namespace MacroOfExileTest.MacroTest
             _macroExecutor.Execute(macro);
 
             // Assert
-            mockAction.Verify(a => a.Execute(_mockTarget.Object, It.IsAny<IContext>()), Times.Once);
-            mockAction.Verify(a => a.GetNext(It.IsAny<ITarget>()), Times.Never);
+            mockAction.Verify(a => a.Execute(_mockTarget.Object, It.IsAny<IContext>(), null), Times.Once);
+            mockAction.Verify(a => a.GetNext(It.IsAny<ITarget>(), null), Times.Never);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace MacroOfExileTest.MacroTest
             var mockAction1 = new Mock<MacroOfExile.Action.Action>();
             mockAction1.Setup(a => a.Id).Returns("0");
             mockAction1.Setup(a => a.IsLast).Returns(false);
-            mockAction1.Setup(a => a.GetNext(It.IsAny<ITarget>())).Returns("1");
+            mockAction1.Setup(a => a.GetNext(It.IsAny<ITarget>(), null)).Returns("1");
             mockAction1.Setup(a => a.OnSuccess).Returns("1");
 
             var mockAction2 = new Mock<MacroOfExile.Action.Action>();
@@ -62,10 +62,10 @@ namespace MacroOfExileTest.MacroTest
             _macroExecutor.Execute(macro);
 
             // Assert
-            mockAction1.Verify(a => a.Execute(_mockTarget.Object, It.IsAny<IContext>()), Times.Once);
-            mockAction1.Verify(a => a.GetNext(It.IsAny<ITarget>()), Times.Once);
-            mockAction2.Verify(a => a.Execute(_mockTarget.Object, It.IsAny<IContext>()), Times.Once);
-            mockAction2.Verify(a => a.GetNext(It.IsAny<ITarget>()), Times.Never);
+            mockAction1.Verify(a => a.Execute(_mockTarget.Object, It.IsAny<IContext>(), null), Times.Once);
+            mockAction1.Verify(a => a.GetNext(It.IsAny<ITarget>(), null), Times.Once);
+            mockAction2.Verify(a => a.Execute(_mockTarget.Object, It.IsAny<IContext>(), null), Times.Once);
+            mockAction2.Verify(a => a.GetNext(It.IsAny<ITarget>(), null), Times.Never);
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace MacroOfExileTest.MacroTest
             var mockAction = new Mock<MacroOfExile.Action.Action>();
             mockAction.Setup(a => a.Id).Returns("0");
             mockAction.Setup(a => a.IsLast).Returns(false);
-            mockAction.Setup(a => a.GetNext(It.IsAny<ITarget>())).Returns("1");
+            mockAction.Setup(a => a.GetNext(It.IsAny<ITarget>(), null)).Returns("1");
 
             var macro = new Macro([mockAction.Object]);
 

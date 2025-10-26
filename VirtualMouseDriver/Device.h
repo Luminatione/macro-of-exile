@@ -16,11 +16,11 @@ static UCHAR InputReportDescriptor[] =
 		0xA1, 0x00,    //     Collection(Physical)
 		0x09, 0x30,    //         UsageId(X[0x0030])
 		0x09, 0x31,    //         UsageId(Y[0x0031])
-		0x15, 0x80,    //         LogicalMinimum(-128)
-		0x25, 0x7F,    //         LogicalMaximum(127)
+		0x15, 0x00,       // LogicalMinimum(0)
+		0x26, 0xFF, 0x7F, // LogicalMaximum(32767)
 		0x95, 0x02,    //         ReportCount(2)
-		0x75, 0x08,    //         ReportSize(8)
-		0x81, 0x06,    //         Input(Data, Variable, Relative, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+		0x75, 0x10,    //         ReportSize(16)
+		0x81, 0x02,    //         Input (Data, Var, Relative)
 		0x05, 0x09,    //         UsagePage(Button[0x0009])
 		0x19, 0x01,    //         UsageIdMin(Button 1[0x0001])
 		0x29, 0x03,    //         UsageIdMax(Button 3[0x0003])
@@ -28,7 +28,7 @@ static UCHAR InputReportDescriptor[] =
 		0x25, 0x01,    //         LogicalMaximum(1)
 		0x95, 0x03,    //         ReportCount(3)
 		0x75, 0x01,    //         ReportSize(1)
-		0x81, 0x02,    //         Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+		0x81, 0x03,    //         Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
 		0xC0,          //     EndCollection()
 		0x95, 0x01,    //     ReportCount(1)
 		0x75, 0x05,    //     ReportSize(5)
@@ -76,8 +76,8 @@ typedef struct
 {
 	UCHAR reportId;
 
-	UCHAR xAxis;
-	UCHAR yAxis;
+	SHORT xAxis;
+	SHORT yAxis;
 
 	UCHAR button1 : 1;
 	UCHAR button2 : 1;

@@ -59,6 +59,8 @@ MouseHidReport* GetMouseReport(PINPUT_MESSAGE message)
 	report->button2 = (message->buttons & RMB_MESSAGE_BIT) ? 1 : 0;
 	report->button3 = (message->buttons & MMB_MESSAGE_BIT) ? 1 : 0;
 
+	TraceEvents(TRACE_LEVEL_INFORMATION, TRACE_QUEUE, "Preparing: X=%d, Y=%d, buttons: %d", report->xAxis, report->yAxis, message->buttons);
+
 	return report;
 }
 

@@ -9,8 +9,8 @@ typedef struct
 
 typedef struct
 {
-    UCHAR xAxis;
-    UCHAR yAxis;
+    SHORT xAxis;
+    SHORT yAxis;
     LONG buttons;
     LONG key;
     LONG keyState;

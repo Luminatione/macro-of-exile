@@ -1,4 +1,6 @@
 {
   "MinShortDelay": 50,
-  "MaxShortDelay": 90
+  "MaxShortDelay": 90,
+  "ResolutionX": 3840,
+  "ResolutionY": 2160
 }

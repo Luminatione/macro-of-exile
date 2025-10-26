@@ -1,4 +1,5 @@
-﻿using MacroOfExile.Macro.Context;
+﻿using MacroOfExile.Configuration;
+using MacroOfExile.Macro.Context;
 using MacroOfExile.Target;
 using Shared.Target;
 using System;
@@ -13,7 +14,7 @@ namespace MacroOfExile.Action.Actions
     {
         public Dictionary<string, string> Variables { get; set; } = [];
 
-        public override void Execute(ITarget target, IContext context)
+        public override void Execute(ITarget target, IContext context, MacroConfiguration? configuration)
         {
             Variables.Keys.ToList().ForEach(k => context.SetVariable(k, Variables[k]));
         }

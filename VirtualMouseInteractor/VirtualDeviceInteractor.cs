@@ -84,7 +84,7 @@ namespace VirtualDeviceInteractor
 
         public int GetMilisBetweenShortActions()
         {
-            return 15;
+            return 25;
         }
 
         protected void SendInputState(InputMessage inputState, uint canal)

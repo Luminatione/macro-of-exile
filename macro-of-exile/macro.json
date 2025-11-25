@@ -3,7 +3,7 @@
     {
       "$type": "InitializeContextFromFile",
       "Id": "0",
-      "FilePath": "contextP.json",
+      "FilePath": "contextPHD.json",
       "OnSuccess": "ground"
     },
     {
@@ -242,7 +242,7 @@
       "$type": "RunPythonScript",
       "Id": "waitForMapLoadingBegin",
       "ScriptPath": "isAlive.py",
-      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Arguments": "--region 0 850 240 210 --color 255 255 160",
       "Resolver": {
         "$type": "RegexOnClipboard",
         "Regex": "^no$"
@@ -260,7 +260,7 @@
       "$type": "RunPythonScript",
       "Id": "checkAliveForLoadToMap",
       "ScriptPath": "isAlive.py",
-      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Arguments": "--region 0 850 240 210 --color 255 255 160",
       "Resolver": {
         "$type": "RegexOnClipboard",
         "Regex": "^yes$"
@@ -380,7 +380,7 @@
       "$type": "RunPythonScript",
       "Id": "checkAlive",
       "ScriptPath": "isAlive.py",
-      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Arguments": "--region 0 850 240 210 --color 255 255 160",
       "Resolver": {
         "$type": "RegexOnClipboard",
         "Regex": "^yes$"
@@ -398,7 +398,7 @@
       "$type": "RunPythonScript",
       "Id": "checkAlive2",
       "ScriptPath": "isAlive.py",
-      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Arguments": "--region 0 850 240 210 --color 255 255 160",
       "Resolver": {
         "$type": "RegexOnClipboard",
         "Regex": "^yes$"
@@ -437,7 +437,7 @@
       "$type": "RunPythonScript",
       "Id": "checkAlivePostDeath",
       "ScriptPath": "isAlive.py",
-      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Arguments": "--region 0 850 240 210 --color 255 255 160",
       "Resolver": {
         "$type": "RegexOnClipboard",
         "Regex": "^yes$"
@@ -463,7 +463,7 @@
       "$type": "RunPythonScript",
       "Id": "waitForMapLoadingBegin2",
       "ScriptPath": "isAlive.py",
-      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Arguments": "--region 0 850 240 210 --color 255 255 160",
       "Resolver": {
         "$type": "RegexOnClipboard",
         "Regex": "^no$"
@@ -481,7 +481,7 @@
       "$type": "RunPythonScript",
       "Id": "checkAliveForLoadToMap2",
       "ScriptPath": "isAlive.py",
-      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Arguments": "--region 0 850 240 210 --color 255 255 160",
       "Resolver": {
         "$type": "RegexOnClipboard",
         "Regex": "^yes$"
@@ -549,7 +549,13 @@
         }
       },
       "OnSuccess": "waitForPlayerStop",
-      "OnFailure": "clickPoint22"
+      "OnFailure": "compensateCapturePerformance1"
+    },
+    {
+      "$type": "Wait",
+      "Id": "compensateCapturePerformance1",
+      "Milliseconds": 500,
+      "OnSuccess": "clickPoint22"
     },
     {
       "$type": "SingleClick",
@@ -576,7 +582,13 @@
         }
       },
       "OnSuccess": "waitForPlayerStop",
-      "OnFailure": "clickPoint32"
+      "OnFailure": "compensateCapturePerformance2"
+    },
+    {
+      "$type": "Wait",
+      "Id": "compensateCapturePerformance2",
+      "Milliseconds": 500,
+      "OnSuccess": "clickPoint32"
     },
     {
       "$type": "SingleClick",
@@ -603,7 +615,13 @@
         }
       },
       "OnSuccess": "waitForPlayerStop",
-      "OnFailure": "clickPoint42"
+      "OnFailure": "compensateCapturePerformance3"
+    },
+    {
+      "$type": "Wait",
+      "Id": "compensateCapturePerformance3",
+      "Milliseconds": 500,
+      "OnSuccess": "clickPoint42"
     },
     {
       "$type": "SingleClick",
@@ -611,26 +629,13 @@
       "X": { "Expression": "$ClickToAudiencePoint4X" },
       "Y": { "Expression": "$ClickToAudiencePoint4Y" },
       "Button": 1,
-      "OnSuccess": "checkScreen42"
+      "OnSuccess": "waitAfterPoint42"
     },
     {
-      "$type": "RunPythonScript",
-      "Id": "checkScreen42",
-      "ScriptPath": "see1.1.py",
-      "OnSuccess": "readScreenResult42"
-    },
-    {
-      "$type": "ClipboardToVariable",
-      "Id": "readScreenResult42",
-      "Variable": "ScreenResult",
-      "Resolver": {
-        "$type": "EvaluationCheck",
-        "Value": {
-          "Expression": "\" $ScreenResult \".Trim() != \"-1,-1\""
-        }
-      },
-      "OnSuccess": "waitForPlayerStop",
-      "OnFailure": "incrementOrbit2"
+      "$type": "Wait",
+      "Id": "waitAfterPoint42",
+      "Milliseconds": 700,
+      "OnSuccess": "incrementOrbit2"
     },
     {
       "$type": "SetVariable",
@@ -644,12 +649,18 @@
         }
       },
       "OnSuccess": "checkLootAfterOrbit2",
-      "OnFailure": "resetOrbitCounter2"
+      "OnFailure": "waitForPlayerStop2"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForPlayerStop2",
+      "Milliseconds": 1000,
+      "OnSuccess": "resetOrbitCounter2"
     },
     {
       "$type": "Wait",
       "Id": "waitForPlayerStop",
-      "Milliseconds": 1000,
+      "Milliseconds": 1300,
       "OnSuccess": "checkLootAfterOrbit2"
     },
     {
@@ -690,21 +701,7 @@
         }
       },
       "OnSuccess": "parseYellowOffset2",
-      "OnFailure": "checkIfNoLoot2"
-    },
-    {
-      "$type": "SetVariable",
-      "Id": "checkIfNoLoot2",
-      "Variable": "LootResult",
-      "Value": { "Expression": "\" $LootResult \".Trim()" },
-      "Resolver": {
-        "$type": "EvaluationCheck",
-        "Value": {
-          "Expression": "\" $LootResult \".Trim() == \"-1,-1\""
-        }
-      },
-      "OnSuccess": "continueOrbit2",
-      "OnFailure": "parsePurpleLoot2"
+      "OnFailure": "continueOrbit2"
     },
     {
       "$type": "SetVariable",
@@ -834,10 +831,10 @@
     {
       "$type": "RunPythonScript",
       "Id": "getScreen",
-      "ScriptPath": "see.py",
+      "ScriptPath": "see1.1.py",
       "Resolver": {
         "$type": "RegexOnClipboard",
-        "Regex": "^[0-9]+,[0-9]+$"
+        "Regex": "^.,[0-9]+,[0-9]+$"
       },
       "OnSuccess": "readClipboard",
       "OnFailure": "openPortal"
@@ -846,6 +843,10 @@
       "$type": "ClipboardToVariable",
       "Id": "readClipboard",
       "Variable": "Clipboard",
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "^p,[0-9]+,[0-9]+$"
+      },
       "OnSuccess": "parseX",
       "OnFailure": "openPortal"
     },
@@ -853,14 +854,14 @@
       "$type": "SetVariable",
       "Id": "parseX",
       "Variable": "TargetX",
-      "Value": { "Expression": "\" $Clipboard \".Split(',')[0]" },
+      "Value": { "Expression": "\" $Clipboard \".Split(',')[1]" },
       "OnSuccess": "parseY"
     },
     {
       "$type": "SetVariable",
       "Id": "parseY",
       "Variable": "TargetY",
-      "Value": { "Expression": "\" $Clipboard \".Split(',')[1]" },
+      "Value": { "Expression": "\" $Clipboard \".Split(',')[2]" },
       "OnSuccess": "getLoot"
     },
     {
@@ -1068,7 +1069,14 @@
         }
       },
       "OnSuccess": "clickSlot",
-      "OnFailure": "adjustMapDevicePointX"
+      "OnFailure": "resetColumnOutputCounter"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "resetColumnOutputCounter",
+      "Variable": "ColumnOutputCounter",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "adjustMapDevicePointX"
     },
     {
       "$type": "SetVariable",

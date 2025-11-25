@@ -5,16 +5,35 @@ import pyperclip
 import time
 import sys
 
-CAPTURE_MONITOR_INDEX = 2
+CAPTURE_MONITOR_INDEX = 1
 SCALE = 1 / 5
 
-TARGET_W = int(260 * SCALE)
-TARGET_H = int(80 * SCALE)
+TARGET_W = int(130 * SCALE)
+TARGET_H = int(40 * SCALE)
 
 PURPLE_BGR = (255, 0, 255)
 PURPLE_TOL = (14, 10, 14)
 YELLOW_BGR = (0, 255, 255)  # Yellow in BGR
 YELLOW_TOL = (14, 10, 14)
+
+# Restricted rectangles: (left, top, right, bottom)
+RESTRICTED_RECTS = [
+    (1370, 950, 1690, 1080),  # First restricted area
+    (230, 950, 640, 1055)     # Second restricted area
+]
+
+def adjust_coordinate_if_restricted(x, y):
+    """
+    Check if coordinates are inside restricted rectangles.
+    If so, return the closest point above the rectangle (same X, Y = top - 1).
+    Otherwise, return original coordinates.
+    """
+    for left, top, right, bottom in RESTRICTED_RECTS:
+        if left <= x <= right and top <= y <= bottom:
+            # Point is inside restricted rectangle, return point above
+            return x, top - 1
+    # Point is not in any restricted rectangle
+    return x, y
 
 def scan_once(target_bgr, tolerance, return_rect_info=False):
     # Handle both single value and tuple tolerance
@@ -65,6 +84,9 @@ def scan_once(target_bgr, tolerance, return_rect_info=False):
                 result_x = int(cx / SCALE + monitor["left"])
                 result_y = int(cy / SCALE + monitor["top"])
                 rect_width = int(w / SCALE)  # Store actual width in screen coordinates
+                
+                # Adjust coordinates if they fall in restricted area
+                result_x, result_y = adjust_coordinate_if_restricted(result_x, result_y)
                 break
 
         if return_rect_info:
@@ -87,6 +109,9 @@ if __name__ == "__main__":
             margin = int(yellow_width * 0.5)
             offset_x = yellow_x + yellow_width + margin
             offset_y = yellow_y  # Keep same Y coordinate
+            
+            # Adjust offset coordinates if they fall in restricted area
+            offset_x, offset_y = adjust_coordinate_if_restricted(offset_x, offset_y)
             
             # Output with 'y' prefix and offset coordinates
             pyperclip.copy(f"y,{offset_x},{offset_y}")

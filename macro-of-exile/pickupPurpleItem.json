@@ -1,0 +1,58 @@
+{
+  "Actions": [
+    {
+      "$type": "InitializeContextFromFile",
+      "Id": "0",
+      "FilePath": "context.json",
+      "OnSuccess": "getScreen"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "getScreen",
+      "ScriptPath": "see.py",
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "^[0-9]+,[0-9]+$"
+      },
+      "OnSuccess": "readClipboard",
+      "OnFailure": "exit"
+    },
+    {
+      "$type": "ClipboardToVariable",
+      "Id": "readClipboard",
+      "Variable": "Clipboard",
+      "OnSuccess": "parseX",
+      "OnFailure": "exit"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "parseX",
+      "Variable": "TargetX",
+      "Value": { "Expression": "\" $Clipboard \".Split(',')[0]" },
+      "OnSuccess": "parseY"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "parseY",
+      "Variable": "TargetY",
+      "Value": { "Expression": "\" $Clipboard \".Split(',')[1]" },
+      "OnSuccess": "performClick"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "performClick",
+      "X": { "Expression": "$TargetX" },
+      "Y": { "Expression": "$TargetY" },
+      "Button": 1,
+      "IsLast": true
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "exit",
+      "X": { "Expression": "0" },
+      "Y": { "Expression": "0" },
+      "Button": 1,
+      "IsLast": true
+    }
+  ]
+}

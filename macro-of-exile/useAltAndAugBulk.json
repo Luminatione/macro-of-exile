@@ -1,0 +1,178 @@
+{
+  "Actions": [
+    {
+      "$type": "InitializeContextFromFile",
+      "Id": "0",
+      "FilePath": "context.json",
+      "OnSuccess": "enableBreaking"
+    },
+    {
+      "$type": "Break",
+      "Id": "enableBreaking",
+      "Key": 119,
+      "OnSuccess": "openItemStash"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "openItemStash",
+      "X": { "Expression": "$StashItemTabX" },
+      "Y": { "Expression": "$StashItemTabY" },
+      "Button": 1,
+      "OnSuccess": "getItem"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "getItem",
+      "X": { "Expression": "$ItemStashFirstSlotX + $ColumnCounter * $EqDelta" },
+      "Y": { "Expression": "$ItemStashFirstSlotY + $RowCounter * $EqDelta" },
+      "Button": 1,
+      "OnSuccess": "openCurrencyTab"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "openCurrencyTab",
+      "X": { "Expression": "$CurrnecyItemTabX" },
+      "Y": { "Expression": "$CurrnecyItemTabY" },
+      "Button": 1,
+      "OnSuccess": "putItemIntoStash"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "putItemIntoStash",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 1,
+      "OnSuccess": "takeAlt"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "takeAlt",
+      "X": { "Expression": "$AltX" },
+      "Y": { "Expression": "$AltY" },
+      "Button": 2,
+      "OnSuccess": "useAlt"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "useAlt",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 1,
+      "OnSuccess": "checkLife"
+    },
+    {
+      "$type": "Copy",
+      "Id": "checkLife",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "maximum Life"
+      },
+      "OnSuccess": "takeItemFromStash",
+      "OnFailure": "checkOpenPrefix"
+    },
+    {
+      "$type": "Copy",
+      "Id": "checkOpenPrefix",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "Prefix"
+      },
+      "OnSuccess": "takeAlt",
+      "OnFailure": "takeAug"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "takeAug",
+      "X": { "Expression": "$AugX" },
+      "Y": { "Expression": "$AugY" },
+      "Button": 2,
+      "OnSuccess": "useAug"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "useAug",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 1,
+      "OnSuccess": "checkLife"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "takeItemFromStash",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 1,
+      "OnSuccess": "openStorage"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "openStorage",
+      "X": { "Expression": "$StashItemTabX" },
+      "Y": { "Expression": "$StashItemTabY" },
+      "Button": 1,
+      "OnSuccess": "putItemIntoStorage"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "putItemIntoStorage",
+      "X": { "Expression": "$ItemStashFirstSlotX + $ColumnCounter * $EqDelta" },
+      "Y": { "Expression": "$ItemStashFirstSlotY + $RowCounter * $EqDelta" },
+      "Button": 1,
+      "OnSuccess": "updateItemCounter"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "updateItemCounter",
+      "Variable": "ItemCounter",
+      "Value": { "Expression": "$ItemCounter + 1" },
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "$ItemCounter >= 63"
+        }
+      },
+      "OnSuccess": "end",
+      "OnFailure": "updateRow"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "updateRow",
+      "Variable": "RowCounter",
+      "Value": { "Expression": "$RowCounter + 1" },
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "$RowCounter < 24"
+        }
+      },
+      "OnSuccess": "getItem",
+      "OnFailure": "resetRowCounter"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "resetRowCounter",
+      "Variable": "RowCounter",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "updateColumnCounter"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "updateColumnCounter",
+      "Variable": "ColumnCounter",
+      "Value": { "Expression": "$ColumnCounter + 1" },
+      "OnSuccess": "getItem"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "end",
+      "X": { "Expression": "$ItemX" },
+      "Y": { "Expression": "$ItemY" },
+      "Button": 0,
+      "IsLast": true
+    }
+  ]
+}

@@ -17,7 +17,7 @@ namespace MacroOfExile.Action.Actions
 
         public override void Execute(ITarget target, IContext context, MacroConfiguration? configuration)
         {
-            context.ModifyVariable(Variable, oldValue => { return Value.GetValue(context); });
+            context.SetVariable(Variable, Value.GetValue(context));
         }
     }
 }

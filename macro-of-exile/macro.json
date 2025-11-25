@@ -3,125 +3,175 @@
     {
       "$type": "InitializeContextFromFile",
       "Id": "0",
-      "FilePath": "context.json",
+      "FilePath": "contextP.json",
+      "OnSuccess": "ground"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "ground",
+      "KeyStates": [
+        {
+          "Key": 0,
+          "State": 0
+        }
+      ],
       "OnSuccess": "enableBreaking"
     },
     {
       "$type": "Break",
       "Id": "enableBreaking",
       "Key": 119,
-      "OnSuccess": "openItemStash"
+      "OnSuccess": "clickStash"
     },
     {
       "$type": "SingleClick",
-      "Id": "openItemStash",
-      "X": { "Expression": "$StashItemTabX" },
-      "Y": { "Expression": "$StashItemTabY" },
+      "Id": "clickStash",
+      "X": { "Expression": "$StashX" },
+      "Y": { "Expression": "$StashY" },
       "Button": 1,
-      "OnSuccess": "getItem"
+      "OnSuccess": "waitAfterStash"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitAfterStash",
+      "Milliseconds": 3000,
+      "OnSuccess": "openFragmentTab"
     },
     {
       "$type": "SingleClick",
-      "Id": "getItem",
-      "X": { "Expression": "$ItemStashFirstSlotX + $ColumnCounter * $EqDelta" },
-      "Y": { "Expression": "$ItemStashFirstSlotY + $RowCounter * $EqDelta" },
+      "Id": "openFragmentTab",
+      "X": { "Expression": "$FragmentTabX" },
+      "Y": { "Expression": "$FragmentTabY" },
       "Button": 1,
-      "OnSuccess": "openCurrencyTab"
+      "OnSuccess": "pressCtrl"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "pressCtrl",
+      "KeyStates": [
+        {
+          "Key": 162,
+          "State": 1
+        }
+      ],
+      "OnSuccess": "clickAudienceLoopStart"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "clickAudienceLoopStart",
+      "Variable": "AudienceCounter",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "clickAudience"
     },
     {
       "$type": "SingleClick",
-      "Id": "openCurrencyTab",
-      "X": { "Expression": "$CurrnecyItemTabX" },
-      "Y": { "Expression": "$CurrnecyItemTabY" },
+      "Id": "clickAudience",
+      "X": { "Expression": "$AudienceX" },
+      "Y": { "Expression": "$AudienceY" },
       "Button": 1,
-      "OnSuccess": "putItemIntoStash"
-    },
-    {
-      "$type": "SingleClick",
-      "Id": "putItemIntoStash",
-      "X": { "Expression": "$ItemX" },
-      "Y": { "Expression": "$ItemY" },
-      "Button": 1,
-      "OnSuccess": "takeAlt"
-    },
-    {
-      "$type": "SingleClick",
-      "Id": "takeAlt",
-      "X": { "Expression": "$AltX" },
-      "Y": { "Expression": "$AltY" },
-      "Button": 2,
-      "OnSuccess": "useAlt"
-    },
-    {
-      "$type": "SingleClick",
-      "Id": "useAlt",
-      "X": { "Expression": "$ItemX" },
-      "Y": { "Expression": "$ItemY" },
-      "Button": 1,
-      "OnSuccess": "checkLife"
-    },
-    {
-      "$type": "Copy",
-      "Id": "checkLife",
-      "X": { "Expression": "$ItemX" },
-      "Y": { "Expression": "$ItemY" },
       "Resolver": {
-        "$type": "RegexOnClipboard",
-        "Regex": "maximum Life"
+        "$type": "EvaluationCheck",
+        "Value": { "Expression": "$AudienceCounter < $enteriesAmount" }
       },
-      "OnSuccess": "takeItemFromStash",
-      "OnFailure": "checkOpenPrefix"
+      "OnSuccess": "incrementAudienceCounter",
+      "OnFailure": "unpressCtrl"
     },
     {
-      "$type": "Copy",
-      "Id": "checkOpenPrefix",
-      "X": { "Expression": "$ItemX" },
-      "Y": { "Expression": "$ItemY" },
-      "Resolver": {
-        "$type": "RegexOnClipboard",
-        "Regex": "Prefix"
-      },
-      "OnSuccess": "takeAlt",
-      "OnFailure": "takeAug"
+      "$type": "SetVariable",
+      "Id": "incrementAudienceCounter",
+      "Variable": "AudienceCounter",
+      "Value": { "Expression": "$AudienceCounter + 1" },
+      "OnSuccess": "clickAudience"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "unpressCtrl",
+      "KeyStates": [
+        {
+          "Key": 0,
+          "State": 0
+        }
+      ],
+      "OnSuccess": "pressEscape"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "pressEscape",
+      "KeyStates": [
+        {
+          "Key": 27,
+          "State": 1
+        }
+      ],
+      "OnSuccess": "unpressEscape"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "unpressEscape",
+      "KeyStates": [
+        {
+          "Key": 0,
+          "State": 0
+        }
+      ],
+      "OnSuccess": "getToMapDevice"
     },
     {
       "$type": "SingleClick",
-      "Id": "takeAug",
-      "X": { "Expression": "$AugX" },
-      "Y": { "Expression": "$AugY" },
-      "Button": 2,
-      "OnSuccess": "useAug"
-    },
-    {
-      "$type": "SingleClick",
-      "Id": "useAug",
-      "X": { "Expression": "$ItemX" },
-      "Y": { "Expression": "$ItemY" },
+      "Id": "getToMapDevice",
+      "X": { "Expression": "$MapDeviceX" },
+      "Y": { "Expression": "$MapDeviceY" },
       "Button": 1,
-      "OnSuccess": "checkLife"
+      "OnSuccess": "waitForStablePosition"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForStablePosition",
+      "Milliseconds": 1500,
+      "OnSuccess": "clickMapDeviceFromStablePosition"
     },
     {
       "$type": "SingleClick",
-      "Id": "takeItemFromStash",
-      "X": { "Expression": "$ItemX" },
-      "Y": { "Expression": "$ItemY" },
+      "Id": "clickMapDeviceFromStablePosition",
+      "X": { "Expression": "$OpenMapDeviceClickX" },
+      "Y": { "Expression": "$OpenMapDeviceClickY" },
       "Button": 1,
-      "OnSuccess": "openStorage"
+      "OnSuccess": "waitAfterMapDevice"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitAfterMapDevice",
+      "Milliseconds": 3000,
+      "OnSuccess": "pressCtrlInMapDevice"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "pressCtrlInMapDevice",
+      "KeyStates": [
+        {
+          "Key": 162,
+          "State": 1
+        }
+      ],
+      "OnSuccess": "clickAudienceInEq"
     },
     {
       "$type": "SingleClick",
-      "Id": "openStorage",
-      "X": { "Expression": "$StashItemTabX" },
-      "Y": { "Expression": "$StashItemTabY" },
+      "Id": "clickAudienceInEq",
+      "X": { "Expression": "$EqFirstSlotX + $ColumnCounter * $EqDelta" },
+      "Y": { "Expression": "$EqFirstSlotY + $RowCounter * $EqDelta" },
       "Button": 1,
-      "OnSuccess": "putItemIntoStorage"
+      "OnSuccess": "unpressCtrlInMapDevice"
     },
     {
-      "$type": "SingleClick",
-      "Id": "putItemIntoStorage",
-      "X": { "Expression": "$ItemStashFirstSlotX + $ColumnCounter * $EqDelta" },
-      "Y": { "Expression": "$ItemStashFirstSlotY + $RowCounter * $EqDelta" },
-      "Button": 1,
+      "$type": "SetKeyState",
+      "Id": "unpressCtrlInMapDevice",
+      "KeyStates": [
+        {
+          "Key": 0,
+          "State": 0
+        }
+      ],
       "OnSuccess": "updateItemCounter"
     },
     {
@@ -132,10 +182,10 @@
       "Resolver": {
         "$type": "EvaluationCheck",
         "Value": {
-          "Expression": "$ItemCounter >= 63"
+          "Expression": "$ItemCounter >= $enteriesAmount"
         }
       },
-      "OnSuccess": "end",
+      "OnSuccess": "startMap",
       "OnFailure": "updateRow"
     },
     {
@@ -146,10 +196,10 @@
       "Resolver": {
         "$type": "EvaluationCheck",
         "Value": {
-          "Expression": "$RowCounter < 24"
+          "Expression": "$RowCounter < 5"
         }
       },
-      "OnSuccess": "getItem",
+      "OnSuccess": "startMap",
       "OnFailure": "resetRowCounter"
     },
     {
@@ -164,15 +214,889 @@
       "Id": "updateColumnCounter",
       "Variable": "ColumnCounter",
       "Value": { "Expression": "$ColumnCounter + 1" },
-      "OnSuccess": "getItem"
+      "OnSuccess": "startMap"
     },
     {
       "$type": "SingleClick",
-      "Id": "end",
-      "X": { "Expression": "$ItemX" },
-      "Y": { "Expression": "$ItemY" },
-      "Button": 0,
-      "IsLast": true
+      "Id": "startMap",
+      "X": { "Expression": "$ActivateButtonX" },
+      "Y": { "Expression": "$ActivateButtonY" },
+      "Button": 1,
+      "OnSuccess": "waitForMap"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForMap",
+      "Milliseconds": 10000,
+      "OnSuccess": "enterMap"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "enterMap",
+      "X": { "Expression": "$Portal1X" },
+      "Y": { "Expression": "$Portal1Y" },
+      "Button": 1,
+      "OnSuccess": "waitForMapLoadingBegin"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "waitForMapLoadingBegin",
+      "ScriptPath": "isAlive.py",
+      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "^no$"
+      },
+      "OnSuccess": "checkAliveForLoadToMap",
+      "OnFailure": "waitForLoadingToBegin"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForLoadingToBegin",
+      "Milliseconds": 500,
+      "OnSuccess": "waitForMapLoadingBegin"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "checkAliveForLoadToMap",
+      "ScriptPath": "isAlive.py",
+      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "^yes$"
+      },
+      "OnSuccess": "goToCenter",
+      "OnFailure": "waitAndCheckAliveAgain"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitAndCheckAliveAgain",
+      "Milliseconds": 500,
+      "OnSuccess": "checkAliveForLoadToMap"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "goToCenter",
+      "X": { "Expression": "$ClickToAudienceCenterX" },
+      "Y": { "Expression": "$ClickToAudienceCenterY" },
+      "Button": 1,
+      "OnSuccess": "startFight"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "startFight",
+      "Variable": "OrbitsCounter",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "clickCenter"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "clickCenter",
+      "X": { "Expression": "$ClickToAudienceCenterX" },
+      "Y": { "Expression": "$ClickToAudienceCenterY" },
+      "Button": 1,
+      "OnSuccess": "waitCenter"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitCenter",
+      "Milliseconds": 1000,
+      "OnSuccess": "clickPoint1"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "clickPoint1",
+      "X": { "Expression": "$ClickToAudiencePoint1X" },
+      "Y": { "Expression": "$ClickToAudiencePoint1Y" },
+      "Button": 1,
+      "OnSuccess": "waitPoint1"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitPoint1",
+      "Milliseconds": 1000,
+      "OnSuccess": "clickPoint2"
+    },
+
+    {
+      "$type": "SingleClick",
+      "Id": "clickPoint2",
+      "X": { "Expression": "$ClickToAudiencePoint2X" },
+      "Y": { "Expression": "$ClickToAudiencePoint2Y" },
+      "Button": 1,
+      "OnSuccess": "waitPoint2"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitPoint2",
+      "Milliseconds": 1000,
+      "OnSuccess": "clickPoint3"
+    },
+
+    {
+      "$type": "SingleClick",
+      "Id": "clickPoint3",
+      "X": { "Expression": "$ClickToAudiencePoint3X" },
+      "Y": { "Expression": "$ClickToAudiencePoint3Y" },
+      "Button": 1,
+      "OnSuccess": "waitPoint3"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitPoint3",
+      "Milliseconds": 1000,
+      "OnSuccess": "clickPoint4"
+    },
+
+    {
+      "$type": "SingleClick",
+      "Id": "clickPoint4",
+      "X": { "Expression": "$ClickToAudiencePoint4X" },
+      "Y": { "Expression": "$ClickToAudiencePoint4Y" },
+      "Button": 1,
+      "OnSuccess": "waitPoint4"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitPoint4",
+      "Milliseconds": 1000,
+      "OnSuccess": "incrementOrbit"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "incrementOrbit",
+      "Variable": "OrbitsCounter",
+      "Value": { "Expression": "$OrbitsCounter + 1" },
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "$OrbitsCounter < $MaxOrbits"
+        }
+      },
+      "OnSuccess": "checkAlive",
+      "OnFailure": "resetOrbitCounter"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "checkAlive",
+      "ScriptPath": "isAlive.py",
+      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "^yes$"
+      },
+      "OnSuccess": "waitToMakeSureDead",
+      "OnFailure": "resetOrbitCounter"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitToMakeSureDead",
+      "Milliseconds": 1000,
+      "OnSuccess": "checkAlive2"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "checkAlive2",
+      "ScriptPath": "isAlive.py",
+      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "^yes$"
+      },
+      "OnSuccess": "clickPoint1",
+      "OnFailure": "resetOrbitCounter"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "resetOrbitCounter",
+      "Variable": "OrbitsCounter",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "waitBeforeResurrect"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitBeforeResurrect",
+      "Milliseconds": 1000,
+      "OnSuccess": "resurrect"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "resurrect",
+      "X": { "Expression": "$ResurrectButtonX" },
+      "Y": { "Expression": "$ResurrectButtonY" },
+      "Button": 1,
+      "OnSuccess": "waitForResurrect"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForResurrect",
+      "Milliseconds": 1000,
+      "OnSuccess": "checkAlivePostDeath"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "checkAlivePostDeath",
+      "ScriptPath": "isAlive.py",
+      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "^yes$"
+      },
+      "OnSuccess": "enterMap2",
+      "OnFailure": "waitAndCheckAlivePostDeathAgain"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitAndCheckAlivePostDeathAgain",
+      "Milliseconds": 500,
+      "OnSuccess": "checkAlivePostDeath"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "enterMap2",
+      "X": { "Expression": "$Portal2X" },
+      "Y": { "Expression": "$Portal2Y" },
+      "Button": 1,
+      "OnSuccess": "waitForMapLoadingBegin2"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "waitForMapLoadingBegin2",
+      "ScriptPath": "isAlive.py",
+      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "^no$"
+      },
+      "OnSuccess": "checkAliveForLoadToMap2",
+      "OnFailure": "waitForLoadingToBegin2"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForLoadingToBegin2",
+      "Milliseconds": 500,
+      "OnSuccess": "waitForMapLoadingBegin2"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "checkAliveForLoadToMap2",
+      "ScriptPath": "isAlive.py",
+      "Arguments": "--region 0 1300 900 790 --color 255 255 160",
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "^yes$"
+      },
+      "OnSuccess": "goToCenter2",
+      "OnFailure": "waitAndCheckAliveAgain2"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitAndCheckAliveAgain2",
+      "Milliseconds": 500,
+      "OnSuccess": "checkAliveForLoadToMap2"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "goToCenter2",
+      "X": { "Expression": "$ClickToAudienceCenterX" },
+      "Y": { "Expression": "$ClickToAudienceCenterY" },
+      "Button": 1,
+      "OnSuccess": "startFight2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "startFight2",
+      "Variable": "OrbitsCounter",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "clickCenter2"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "clickCenter2",
+      "X": { "Expression": "$ClickToAudienceCenterX" },
+      "Y": { "Expression": "$ClickToAudienceCenterY" },
+      "Button": 1,
+      "OnSuccess": "waitCenter2"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitCenter2",
+      "Milliseconds": 1000,
+      "OnSuccess": "clickPoint12"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "clickPoint12",
+      "X": { "Expression": "$ClickToAudiencePoint1X" },
+      "Y": { "Expression": "$ClickToAudiencePoint1Y" },
+      "Button": 1,
+      "OnSuccess": "checkScreen12"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "checkScreen12",
+      "ScriptPath": "see1.1.py",
+      "OnSuccess": "readScreenResult12"
+    },
+    {
+      "$type": "ClipboardToVariable",
+      "Id": "readScreenResult12",
+      "Variable": "ScreenResult",
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "\" $ScreenResult \".Trim() != \"-1,-1\""
+        }
+      },
+      "OnSuccess": "waitForPlayerStop",
+      "OnFailure": "clickPoint22"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "clickPoint22",
+      "X": { "Expression": "$ClickToAudiencePoint2X" },
+      "Y": { "Expression": "$ClickToAudiencePoint2Y" },
+      "Button": 1,
+      "OnSuccess": "checkScreen22"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "checkScreen22",
+      "ScriptPath": "see1.1.py",
+      "OnSuccess": "readScreenResult22"
+    },
+    {
+      "$type": "ClipboardToVariable",
+      "Id": "readScreenResult22",
+      "Variable": "ScreenResult",
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "\" $ScreenResult \".Trim() != \"-1,-1\""
+        }
+      },
+      "OnSuccess": "waitForPlayerStop",
+      "OnFailure": "clickPoint32"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "clickPoint32",
+      "X": { "Expression": "$ClickToAudiencePoint3X" },
+      "Y": { "Expression": "$ClickToAudiencePoint3Y" },
+      "Button": 1,
+      "OnSuccess": "checkScreen32"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "checkScreen32",
+      "ScriptPath": "see1.1.py",
+      "OnSuccess": "readScreenResult32"
+    },
+    {
+      "$type": "ClipboardToVariable",
+      "Id": "readScreenResult32",
+      "Variable": "ScreenResult",
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "\" $ScreenResult \".Trim() != \"-1,-1\""
+        }
+      },
+      "OnSuccess": "waitForPlayerStop",
+      "OnFailure": "clickPoint42"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "clickPoint42",
+      "X": { "Expression": "$ClickToAudiencePoint4X" },
+      "Y": { "Expression": "$ClickToAudiencePoint4Y" },
+      "Button": 1,
+      "OnSuccess": "checkScreen42"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "checkScreen42",
+      "ScriptPath": "see1.1.py",
+      "OnSuccess": "readScreenResult42"
+    },
+    {
+      "$type": "ClipboardToVariable",
+      "Id": "readScreenResult42",
+      "Variable": "ScreenResult",
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "\" $ScreenResult \".Trim() != \"-1,-1\""
+        }
+      },
+      "OnSuccess": "waitForPlayerStop",
+      "OnFailure": "incrementOrbit2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "incrementOrbit2",
+      "Variable": "OrbitsCounter",
+      "Value": { "Expression": "$OrbitsCounter + 1" },
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "$OrbitsCounter < $MaxOrbits"
+        }
+      },
+      "OnSuccess": "checkLootAfterOrbit2",
+      "OnFailure": "resetOrbitCounter2"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForPlayerStop",
+      "Milliseconds": 1000,
+      "OnSuccess": "checkLootAfterOrbit2"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "checkLootAfterOrbit2",
+      "ScriptPath": "see1.1.py",
+      "OnSuccess": "readLootResult2"
+    },
+    {
+      "$type": "ClipboardToVariable",
+      "Id": "readLootResult2",
+      "Variable": "LootResult",
+      "OnSuccess": "checkLootResult2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "checkLootResult2",
+      "Variable": "LootResult",
+      "Value": { "Expression": "\" $LootResult \".Trim()" },
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "\" $LootResult \".Trim().StartsWith(\"p,\")"
+        }
+      },
+      "OnSuccess": "parsePurpleLoot2",
+      "OnFailure": "checkIfYellowLoot2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "checkIfYellowLoot2",
+      "Variable": "LootResult",
+      "Value": { "Expression": "\" $LootResult \".Trim()" },
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "\" $LootResult \".Trim().StartsWith(\"y,\")"
+        }
+      },
+      "OnSuccess": "parseYellowOffset2",
+      "OnFailure": "checkIfNoLoot2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "checkIfNoLoot2",
+      "Variable": "LootResult",
+      "Value": { "Expression": "\" $LootResult \".Trim()" },
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "\" $LootResult \".Trim() == \"-1,-1\""
+        }
+      },
+      "OnSuccess": "continueOrbit2",
+      "OnFailure": "parsePurpleLoot2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "parseYellowOffset2",
+      "Variable": "YellowOffsetX",
+      "Value": { "Expression": "\" $LootResult \".Trim().Split(',')[1]" },
+      "OnSuccess": "parseYellowOffsetY2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "parseYellowOffsetY2",
+      "Variable": "YellowOffsetY",
+      "Value": { "Expression": "\" $LootResult \".Trim().Split(',')[2]" },
+      "OnSuccess": "clickYellowOffset2"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "clickYellowOffset2",
+      "X": { "Expression": "$YellowOffsetX" },
+      "Y": { "Expression": "$YellowOffsetY" },
+      "Button": 1,
+      "OnSuccess": "waitAfterYellowOffset2"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitAfterYellowOffset2",
+      "Milliseconds": 500,
+      "OnSuccess": "recheckLootAfterYellow2"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "recheckLootAfterYellow2",
+      "ScriptPath": "see1.1.py",
+      "OnSuccess": "readLootAfterYellow2"
+    },
+    {
+      "$type": "ClipboardToVariable",
+      "Id": "readLootAfterYellow2",
+      "Variable": "LootResult",
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "\" $LootResult \".Trim().StartsWith(\"p,\")"
+        }
+      },
+      "OnSuccess": "parsePurpleLootAfterYellow2",
+      "OnFailure": "resetOrbitCounter2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "parsePurpleLootAfterYellow2",
+      "Variable": "PurpleX",
+      "Value": { "Expression": "\" $LootResult \".Trim().Split(',')[1]" },
+      "OnSuccess": "parsePurpleLootYAfterYellow2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "parsePurpleLootYAfterYellow2",
+      "Variable": "PurpleY",
+      "Value": { "Expression": "\" $LootResult \".Trim().Split(',')[2]" },
+      "OnSuccess": "clickPurpleLootAfterYellow2"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "clickPurpleLootAfterYellow2",
+      "X": { "Expression": "$PurpleX" },
+      "Y": { "Expression": "$PurpleY" },
+      "Button": 1,
+      "OnSuccess": "waitAfterPurpleClickAfterYellow2"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitAfterPurpleClickAfterYellow2",
+      "Milliseconds": 1500,
+      "OnSuccess": "resetOrbitCounter2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "parsePurpleLoot2",
+      "Variable": "PurpleX",
+      "Value": { "Expression": "\" $LootResult \".Trim().Split(',')[1]" },
+      "OnSuccess": "parsePurpleLootY2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "parsePurpleLootY2",
+      "Variable": "PurpleY",
+      "Value": { "Expression": "\" $LootResult \".Trim().Split(',')[2]" },
+      "OnSuccess": "clickPurpleLoot2"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "clickPurpleLoot2",
+      "X": { "Expression": "$PurpleX" },
+      "Y": { "Expression": "$PurpleY" },
+      "Button": 1,
+      "OnSuccess": "waitAfterPurpleClick2"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitAfterPurpleClick2",
+      "Milliseconds": 1500,
+      "OnSuccess": "continueOrbit2"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "continueOrbit2",
+      "Variable": "OrbitsCounter",
+      "Value": { "Expression": "$OrbitsCounter" },
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "$OrbitsCounter < $MaxOrbits"
+        }
+      },
+      "OnSuccess": "clickPoint12",
+      "OnFailure": "resetOrbitCounter2"
+    },
+
+    {
+      "$type": "SetVariable",
+      "Id": "resetOrbitCounter2",
+      "Variable": "OrbitsCounter",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "getScreen"
+    },
+    {
+      "$type": "RunPythonScript",
+      "Id": "getScreen",
+      "ScriptPath": "see.py",
+      "Resolver": {
+        "$type": "RegexOnClipboard",
+        "Regex": "^[0-9]+,[0-9]+$"
+      },
+      "OnSuccess": "readClipboard",
+      "OnFailure": "openPortal"
+    },
+    {
+      "$type": "ClipboardToVariable",
+      "Id": "readClipboard",
+      "Variable": "Clipboard",
+      "OnSuccess": "parseX",
+      "OnFailure": "openPortal"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "parseX",
+      "Variable": "TargetX",
+      "Value": { "Expression": "\" $Clipboard \".Split(',')[0]" },
+      "OnSuccess": "parseY"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "parseY",
+      "Variable": "TargetY",
+      "Value": { "Expression": "\" $Clipboard \".Split(',')[1]" },
+      "OnSuccess": "getLoot"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "getLoot",
+      "X": { "Expression": "$TargetX" },
+      "Y": { "Expression": "$TargetY" },
+      "Button": 1,
+      "OnSuccess": "waitForLootPickUp"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForLootPickUp",
+      "Milliseconds": 3000,
+      "OnSuccess": "getScreen"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "openPortal",
+      "KeyStates": [
+        {
+          "Key": 81,
+          "State": 1
+        }
+      ],
+      "OnSuccess": "endOpeningPortal"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "endOpeningPortal",
+      "KeyStates": [
+        {
+          "Key": 0,
+          "State": 0
+        }
+      ],
+      "OnSuccess": "waitForPortal"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForPortal",
+      "Milliseconds": 5000,
+      "OnSuccess": "exitArea"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "exitArea",
+      "X": { "Expression": "$PortalX" },
+      "Y": { "Expression": "$PortalY" },
+      "Button": 1,
+      "OnSuccess": "waitForEnsureExit"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForEnsureExit",
+      "Milliseconds": 500,
+      "OnSuccess": "ensureExitArea"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "ensureExitArea",
+      "X": { "Expression": "$PortalX" },
+      "Y": { "Expression": "$PortalY" },
+      "Button": 1,
+      "OnSuccess": "decrementAudience"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "decrementAudience",
+      "Variable": "AudienceCounter",
+      "Value": { "Expression": "$AudienceCounter - 1" },
+      "OnSuccess": "waitForComingBackToHO"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForComingBackToHO",
+      "Milliseconds": 10000,
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": { "Expression": "$AudienceCounter > 0" }
+      },
+      "OnSuccess": "openMapDeviceFromMapDevice",
+      "OnFailure": "openStashFromMapDevice"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "openMapDeviceFromMapDevice",
+      "X": { "Expression": "$MapDeviceXFromMapDevice" },
+      "Y": { "Expression": "$MapDeviceYFromMapDevice" },
+      "Button": 1,
+      "OnSuccess": "waitAfterMapDevice"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "exit",
+      "KeyStates": [
+        {
+          "Key": 0,
+          "State": 0
+        }
+      ],
+      "IsList": true
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "openStashFromMapDevice",
+      "X": { "Expression": "$StashClickFromMapDeviceX" },
+      "Y": { "Expression": "$StashClickFromMapDeviceY" },
+      "Button": 1,
+      "OnSuccess": "waitForStash"
+    },
+    {
+      "$type": "Wait",
+      "Id": "waitForStash",
+      "Milliseconds": 1000,
+      "OnSuccess": "openOutputTab"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "openOutputTab",
+      "X": { "Expression": "$outputStashTabX" },
+      "Y": { "Expression": "$outputStashTabY" },
+      "Button": 1,
+      "OnSuccess": "pressCtrlForOutput"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "pressCtrlForOutput",
+      "KeyStates": [
+        {
+          "Key": 162,
+          "State": 1
+        }
+      ],
+      "OnSuccess": "EmptyLootLoopStart"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "EmptyLootLoopStart",
+      "Variable": "EqSlotIndex",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "clickSlot"
+    },
+    {
+      "$type": "SingleClick",
+      "Id": "clickSlot",
+      "X": { "Expression": "$EqFirstSlotX + $ColumnOutputCounter * $EqDelta" },
+      "Y": { "Expression": "$EqFirstSlotY + $RowOutputCounter * $EqDelta" },
+      "Button": 1,
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": { "Expression": "$EqSlotIndex < 61" }
+      },
+      "OnSuccess": "incrementEqSlotIndex",
+      "OnFailure": "unpressCtrlOutput"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "incrementEqSlotIndex",
+      "Variable": "EqSlotIndex",
+      "Value": { "Expression": "$EqSlotIndex + 1" },
+      "OnSuccess": "updateRowOutput"
+    },
+    {
+      "$type": "SetKeyState",
+      "Id": "unpressCtrlOutput",
+      "KeyStates": [
+        {
+          "Key": 0,
+          "State": 0
+        }
+      ],
+      "OnSuccess": "adjustMapDevicePointX"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "updateRowOutput",
+      "Variable": "RowOutputCounter",
+      "Value": { "Expression": "$RowOutputCounter + 1" },
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "$RowOutputCounter < 5"
+        }
+      },
+      "OnSuccess": "clickSlot",
+      "OnFailure": "resetRowOutputCounter"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "resetRowOutputCounter",
+      "Variable": "RowOutputCounter",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "updateColumnOutputCounter"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "updateColumnOutputCounter",
+      "Variable": "ColumnOutputCounter",
+      "Value": { "Expression": "$ColumnOutputCounter + 1" },
+      "Resolver": {
+        "$type": "EvaluationCheck",
+        "Value": {
+          "Expression": "$ColumnOutputCounter < 12"
+        }
+      },
+      "OnSuccess": "clickSlot",
+      "OnFailure": "adjustMapDevicePointX"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "adjustMapDevicePointX",
+      "Variable": "MapDeviceX",
+      "Value": { "Expression": "$AdjustedMapDeviceX" },
+      "OnSuccess": "adjustMapDevicePointY"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "adjustMapDevicePointY",
+      "Variable": "MapDeviceY",
+      "Value": { "Expression": "$AdjustedMapDeviceY" },
+      "OnSuccess": "resetEqRow"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "resetEqRow",
+      "Variable": "RowCounter",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "resetEqColumn"
+    },
+    {
+      "$type": "SetVariable",
+      "Id": "resetEqColumn",
+      "Variable": "ColumnCounter",
+      "Value": { "Expression": "0" },
+      "OnSuccess": "openFragmentTab"
     }
   ]
 }

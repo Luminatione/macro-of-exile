@@ -1,0 +1,22 @@
+{
+	"Actions": [
+		{
+			"$type": "InitializeContextFromFile",
+			"Id": "0",
+			"FilePath": "context.json",
+			"OnSuccess": "detectPurple"
+		},
+
+		{
+			"$type": "RunPythonScript",
+			"Id": "detectPurple",
+			"ScriptPath": "see1.1.py",
+			"Arguments":  "255 0 255 10",
+			"Resolver": {
+				"$type": "RegexOnClipboard",
+				"Regex": "^-?[0-9]+,-?[0-9]+$"
+			},
+			"IsLast":  true
+		}
+	]
+}

@@ -19,6 +19,9 @@ namespace MacroOfExile.Action
     [JsonDerivedType(typeof(InterpolateMouseToPositionAction), typeDiscriminator: "InterpolateMouseToPosition")]
     [JsonDerivedType(typeof(BreakAction), typeDiscriminator: "Break")]
     [JsonDerivedType(typeof(SetVariableAction), typeDiscriminator: "SetVariable")]
+    [JsonDerivedType(typeof(RunPythonScriptAction), typeDiscriminator: "RunPythonScript")]
+    [JsonDerivedType(typeof(ClipboardToVariableAction), typeDiscriminator: "ClipboardToVariable")]
+    [JsonDerivedType(typeof(WaitAction), typeDiscriminator: "Wait")]
     public abstract partial class Action(string id, IActionResultResolver? resolver, string onSuccess, string onFailure, bool isLast = false)
     {
         protected Action() : this("0", null, "0", "0") { }
